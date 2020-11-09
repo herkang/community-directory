@@ -60,6 +60,13 @@ class Resource(db.Model):
         country_code
     )
 
+#Testing 
+#user = User(phone_number=PhoneNumber('0401234567', 'FI'))
+
+#user.phone_number.e164  # u'+358401234567'
+#user.phone_number.international  # u'+358 40 1234567'
+#user.phone_number.national  # u'040 1234567'
+#user.country_code  # 'FI'
     location = db.Column(db.String)
     #To do, figure out how to put location in from txt file
     
