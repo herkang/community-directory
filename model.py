@@ -1,6 +1,7 @@
 """ Models for minority community resource directory """
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import PhoneNumber 
 
 db = SQLAlchemy()
 
@@ -50,9 +51,14 @@ class Resource(db.Model):
     # https://sqlalchemy-utils.readthedocs.io/en/latest/data_types.html#module-sqlalchemy_utils.types.phone_number
 
     service = db.Column(db.String)
+    _phone_number = db.Column(db.Unicode(20))
+    country_code = db.Column(db.Unicode(8))
 
-    #phone_number = db.Column(db.String)
-    # To do, limit to specific whole number input
+    phone_number = db.orm.composite(
+        PhoneNumber, 
+        _phone_number, 
+        country_code
+    )
 
     location = db.Column(db.String)
     #To do, figure out how to put location in from txt file
@@ -63,37 +69,6 @@ class Resource(db.Model):
         """ Show user information """
         
         return f'<Resource resource_id={self.resource_id} resource name resource_name={self.resource_name}>'
-
-class User_resource(db.Model):
-    """ Creates user's resource object"""
-
-    __tablename__ = 'user_resources'
-
-    user_resource = db.Column(db.Integer, 
-                        primary_key=True, 
-                        autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    resource_id = db.Column(db.Integer, db.ForeignKey('resources.resource_id'))
-    
-    user = db.relationship('User', backref='users')
-    resource = db.relationship('Resource', backref='resources')
-
-    saved_resources = db.Column(db.String)
-    #To do, find correct way to store list of resources
-
-    def __repr__(self):
-        """ Show saved resources """
-        return f'<Saved resources saved_resources={self.saved_resources}>'
-
-def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-    flask_app.config['SQLALCHEMY_ECHO'] = echo
-    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-    db.app = flask_app
-    db.init_app(flask_app)
-
-    print('Connected to db!')
 
 if __name__ == '__main__':
     from server import app
