@@ -59,16 +59,16 @@ class Resource(db.Model):
                         primary_key=True, 
                         autoincrement=True)
     res_cat_id = db.Column(db.Integer, 
-                            db.ForeignKey('resource_categories.res_cat_name'))
+                            db.ForeignKey('resource_categories.res_cat_id'))
     resource_name = db.Column(db.String)
     phone_number = db.Column(db.String)
     location = db.Column(db.String)
     
-    resource = db.relationship('Res_cat', backref='resource_categories')
+    resource = db.relationship('Res_cat', backref='directs')
 
     #db.create_all() 
-    #test_res_cat = Resource(res_cat_id=test_resource, resource_name='mental', phone_number='651-234-5423', location='MN')
-    #db.session.add(test_res_cat )
+    #test_res_cat = Resource(resource=test_resource, resource_name='mental', phone_number='651-234-5423', location='MN')
+    #db.session.add(test_res_cat)
     #db.session.commit()
     #test_res_cat = Resource.query.first()
     #test_res_cat
