@@ -1,12 +1,12 @@
 """ Models for minority community resource directory """
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_utils import PhoneNumber 
+#from sqlalchemy_utils import PhoneNumber 
 
 db = SQLAlchemy()
 
 class User(db.Model):
-    """ Creates an User object """
+    """ Creates an users table """
 
     __tablename__ = 'users'
 
@@ -29,7 +29,7 @@ class User(db.Model):
         return f'<User user_id={self.user_id} username={self.username}>'
 
 class Res_cat(db.Model):
-    """ Creates a resource category object """
+    """ Creates a resource categories table """
 
     __tablename__ = 'resource_categories'
 
@@ -44,14 +44,14 @@ class Res_cat(db.Model):
         return f'<Resource Category res_cat_id={self.res_cat_id} Resource category name res_cat_name={self.res_cat_name}>'
 
     #db.create_all() 
-    #test_resource = Res_cat(res_cat_name='help')
-    #db.session.add(test_resource)
+    #test_res_cat = Res_cat(res_cat_name='help')
+    #db.session.add(test_res_cat)
     #db.session.commit()
     #res_cat = Res_cat.query.first()
     #res_cat
 
 class Resource(db.Model):
-    """ Creates a resource object """
+    """ Creates a resources table """
 
     __tablename__ = 'resources'
 
@@ -64,20 +64,42 @@ class Resource(db.Model):
     phone_number = db.Column(db.String)
     location = db.Column(db.String)
     
-    resource = db.relationship('Res_cat', backref='directs')
+    #res_cat = db.relationship('Res_cat', backref='directs')
 
     #db.create_all() 
-    #test_res_cat = Resource(resource=test_resource, resource_name='mental', phone_number='651-234-5423', location='MN')
+    #test_resource = Resource(res_cat=test_res_cat, resource_name='mental', phone_number='651-234-5423', location='MN')
+    #db.session.add(test_resource)
+    #db.session.commit()
+    #test_resource = Resource.query.first()
+    #test_resource
+
+class User_resource(db.Model):
+    """ Creates a user resources table """
+
+    __tablename__ = 'user_resources'
+
+    user_res_id = db.Column(db.Integer, 
+                        primary_key=True, 
+                        autoincrement=True)
+    user_id = db.Column(db.Integer,
+                            db.ForeignKey('users.user_id'))
+    resource_id = db.Column(db.Integer, 
+                            db.ForeignKey('resources.resource_id'))
+    
+    #user_id = db.relationship('User', backref='directs')
+    #user_resource = db.relationship('Resource', backref='directs')
+    
+    def __repr__(self):
+        """ Show user information """
+        
+        return f'<User resource user_id={self.user_id} resource id resource_id={self.resource_id}>'
+
+    #db.create_all() 
+    #test_user_res = User_resource(user_id=test_user, user_resource=test_resource)
     #db.session.add(test_res_cat)
     #db.session.commit()
     #test_res_cat = Resource.query.first()
     #test_res_cat
-
-    def __repr__(self):
-        """ Show user information """
-        
-        return f'<Resource resource_id={self.resource_id} resource name resource_name={self.resource_name}>'
-
 
 def connect_to_db(flask_app, db_uri='postgresql:///directs', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
