@@ -7,7 +7,7 @@ db = SQLAlchemy()
 class User(db.Model):
     """ Creates an users table """
 
-    __tablename__ = 'users'
+    __tablename__ = 'users'cd 
 
     user_id = db.Column(db.Integer,
                         primary_key=True,
@@ -22,31 +22,21 @@ class User(db.Model):
         backref="users",
     )
 
-
-
     def add_bookmark_by_id(self, resource_id):
-# get resource
-self.bookmarks.apend(resource)
+    """ Creates an instance of resource """
 
-    def __repr__(self):
-        """ Show user informations """
+    # get resource
+        self.bookmarks.append(resource)
 
-        return f'<User user_id={self.user_id} username={self.username}>'
-
-class Res_cat(db.Model):
+class Category(db.Model):
     """ Creates a resource categories table """
 
-    __tablename__ = 'resource_categories'
+    __tablename__ = 'categories'
 
-    res_cat_id = db.Column(db.Integer,
+    category_id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    res_cat_name = db.Column(db.String)
-
-    def __repr__(self):
-        """ Show user informations """
-
-        return f'<Resource Category res_cat_id={self.res_cat_id} Resource category name res_cat_name={self.res_cat_name}>'
+    category_name = db.Column(db.String)
 
 class Resource(db.Model):
     """ Creates a resources table """
@@ -56,13 +46,13 @@ class Resource(db.Model):
     resource_id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    res_cat_id = db.Column(db.Integer,
-                            db.ForeignKey('resource_categories.res_cat_id'))
+    category_id = db.Column(db.Integer,
+                            db.ForeignKey('categories.category_id'))
     resource_name = db.Column(db.String)
     phone_number = db.Column(db.String)
     location = db.Column(db.String)
 
-    category = db.relationship('Res_cat', backref='resources')
+    category = db.relationship('Category', backref='resources')
 
 class UserResource(db.Model):
     """ Creates a user resources table """
