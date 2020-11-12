@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Res_cat, Resource, connect_to_db
+from model import db, User, Res_cat, Resource, User_resource, connect_to_db
 
 def create_user(username, password):
     """ Creates a user object """
@@ -33,6 +33,26 @@ def get_res_cat(res_cat_id):
     res_cat = Res_cat.query.get(res_cat_id)
 
     return res_cat
+
+def creates_resource(res_cat, resource_name, phone_number, location):
+    """ Creates a resource object"""
+    #TODO: Fix TypeError: 'res_cat' is an invalid keyword argument for Resource
+
+    resource = Resource(res_cat=res_cat, resource_name=resource_name, phone_number=phone_number, location=location)
+    db.session.add(resource)
+    db.session.commit()  
+
+    return resource
+
+def create_user_resource(saved_resource):
+    """ Creates user's resource object """
+    #TODO: Fix NameError: name 'resource' is not defined
+
+    user_resource = User_resource(saved_resource=resource)
+    db.session.add(saved_resource)
+    db.session.commit()
+
+    return user_resource
 
 if __name__ == '__main__':
     from server import app
