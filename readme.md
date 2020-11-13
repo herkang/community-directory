@@ -5,8 +5,7 @@ A minority community service directory where user can create an account to save 
 
 ### Technologies required (besides typical Hackbright tech stack)
 
-- Google Maps (Places)
-- Tabula (pdf to txt)
+- BeautifulSoup4
 
 #### MVP
 
