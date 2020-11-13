@@ -1,58 +1,63 @@
 """CRUD operations."""
 
-from model import db, User, Res_cat, Resource, User_resource, connect_to_db
+from model import db, User, Category, Resource, UserResource, connect_to_db
 
 def create_user(username, password):
-    """ Creates a user object """
+    """ Creates and return new user """
 
     user = User(username=username, password=password)
+    
     db.session.add(user)
     db.session.commit()
 
     return user
 
 def get_user(user_id):
-    """ Returns user's information by user's id """
+    """ Returns user by primary key """
 
-    user = User.query.get(user_id)
+    return User.query.get(user_id)
 
-    return user
+def get_user_by_username(username):
+    """ Return a user by username """
 
-def creates_res_cat(res_cat_name):
-    """ Creates a resource category object """
+    return User.query.filter(User.username == username).first()
 
-    res_cat_name = Res_cat(res_cat_name=res_cat_name)
-    db.session.add(res_cat_name)
+
+def creates_category(category_name):
+    """ Creates a category object """
+
+    category = Category(category_name=category_name)
+    db.session.add(category)
     db.session.commit()
 
-    return res_cat_name 
+    return category
 
-def get_res_cat(res_cat_id):
-    """ Returns a resource category by id""" 
+def get_category(category_id):
+    """ Returns a resource category by id """ 
 
-    res_cat = Res_cat.query.get(res_cat_id)
+    category_instance = Category.query.get(category_id)
 
-    return res_cat
+    return category_instance
 
-def creates_resource(res_cat, resource_name, phone_number, location):
-    """ Creates a resource object"""
-    #TODO: Fix TypeError: 'res_cat' is an invalid keyword argument for Resource
+# def creates_resource(category_instance, resource_name, phone_number, location):
+#     """ Creates a resource object"""
+#     #TODO: Fix TypeError: 'res_cat' is an invalid keyword argument for Resource
 
-    resource = Resource(res_cat=res_cat, resource_name=resource_name, phone_number=phone_number, location=location)
-    db.session.add(resource)
-    db.session.commit()  
+#     resource = Resource(category_instance=category_instance, resource_name=resource_name, phone_number=phone_number, location=location)
+#     db.session.add(resource)
+#     db.session.commit()  
 
-    return resource
+#     return resource
 
-def create_user_resource(saved_resource):
-    """ Creates user's resource object """
-    #TODO: Fix NameError: name 'resource' is not defined
+# def create_user_resource(saved_resource):
+#     """ Creates user's resource object """
+#     #TODO: Fix NameError: name 'resource' is not defined
 
-    user_resource = User_resource(saved_resource=resource)
-    db.session.add(saved_resource)
-    db.session.commit()
+#     user_resource = User_resource(saved_resource=resource)
+#     db.session.add(saved_resource)
+#     db.session.commit()
 
-    return user_resource
+#     return user_resource
 
 if __name__ == '__main__':
     from server import app
