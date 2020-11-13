@@ -5,9 +5,9 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-    """ Creates an users table """
+    """ Creates users table """
 
-    __tablename__ = 'users'cd 
+    __tablename__ = 'users'
 
     user_id = db.Column(db.Integer,
                         primary_key=True,
@@ -22,11 +22,11 @@ class User(db.Model):
         backref="users",
     )
 
-    def add_bookmark_by_id(self, resource_id):
-    """ Creates an instance of resource """
+    # def add_bookmark_by_id(self, resource_id):
+    #     """ Creates an instance of resource """
 
-    # get resource
-        self.bookmarks.append(resource)
+    # # get resource
+    #     self.bookmarks.append(resource_id)
 
 class Category(db.Model):
     """ Creates a resource categories table """
@@ -67,7 +67,7 @@ class UserResource(db.Model):
     resource_id = db.Column(db.Integer,
                             db.ForeignKey('resources.resource_id'))
 
-def connect_to_db(flask_app, db_uri='postgresql:///directs', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
