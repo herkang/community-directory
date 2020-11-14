@@ -12,19 +12,19 @@ def create_user(username, password):
 
     return user
 
-def get_user(user_id):
-    """ Returns user by primary key """
+def get_user():
+    """ Return user by primary key """
 
     return User.query.get(user_id)
 
 def get_user_by_username(username):
-    """ Return a user by username """
+    """ Return user by username """
 
     return User.query.filter(User.username == username).first()
 
 
-def creates_category(category_name):
-    """ Creates a category object """
+def create_category(category_name):
+    """ Create a category instance """
 
     category = Category(category_name=category_name)
     db.session.add(category)
@@ -32,32 +32,33 @@ def creates_category(category_name):
 
     return category
 
-def get_category(category_id):
-    """ Returns a resource category by id """ 
+def get_category():
+    """ Return resource categories """ 
 
-    category_instance = Category.query.get(category_id)
+    return Category.query.all()
 
-    return category_instance
+def create_resource(category, resource_name, phone_number, location):
+    """ Creates a resource object"""
+   
+    resource = Resource(category=category, resource_name=resource_name, phone_number=phone_number, location=location)
+    db.session.add(resource)
+    db.session.commit()  
 
-# def creates_resource(category_instance, resource_name, phone_number, location):
-#     """ Creates a resource object"""
-#     #TODO: Fix TypeError: 'res_cat' is an invalid keyword argument for Resource
+    return resource
 
-#     resource = Resource(category_instance=category_instance, resource_name=resource_name, phone_number=phone_number, location=location)
-#     db.session.add(resource)
-#     db.session.commit()  
+def get_resource():
+    """ Return all resources """
 
-#     return resource
+    return Resource.query.all()
 
-# def create_user_resource(saved_resource):
-#     """ Creates user's resource object """
-#     #TODO: Fix NameError: name 'resource' is not defined
+def add_bookmark_by_id(resource_id):
+    """ Creates an instance of bookmark resource"""
+   
+    bookmarks = User_resource(resource_id=resource_id)
+    db.session.add(bookmark)
+    db.session.commit()
 
-#     user_resource = User_resource(saved_resource=resource)
-#     db.session.add(saved_resource)
-#     db.session.commit()
-
-#     return user_resource
+    return bookmark
 
 if __name__ == '__main__':
     from server import app
