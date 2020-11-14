@@ -19,8 +19,8 @@ summary = table.find_all('tr')
 def data(summary):
     for row in summary:
 
-        row_data = [td.text for td in row.find_all('td')]
-        print(row_data)
+        return row_data = [td.text for td in row.find_all('td')]
+
 
 resource_obj = table.tr.text
 #one resource object

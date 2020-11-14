@@ -5,14 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
-    """ Creates users table """
+    """ Create users table """
 
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    username = db.Column(db.String, nullable=False, unique= True)
+    username = db.Column(db.String,
+                        nullable=False, 
+                        unique= True)
     password = db.Column(db.String)
 
     # bookmarks: List[Resource]
@@ -22,14 +24,8 @@ class User(db.Model):
         backref="users",
     )
 
-    # def add_bookmark_by_id(self, resource_id):
-    #     """ Creates an instance of resource """
-
-    # # get resource
-    #     self.bookmarks.append(resource_id)
-
 class Category(db.Model):
-    """ Creates a resource categories table """
+    """ Create a resource categories table """
 
     __tablename__ = 'categories'
 
@@ -39,7 +35,7 @@ class Category(db.Model):
     category_name = db.Column(db.String)
 
 class Resource(db.Model):
-    """ Creates a resources table """
+    """ Create a resources table """
 
     __tablename__ = 'resources'
 
@@ -55,7 +51,7 @@ class Resource(db.Model):
     category = db.relationship('Category', backref='resources')
 
 class UserResource(db.Model):
-    """ Creates a user resources table """
+    """ Create a user resources table """
 
     __tablename__ = 'user_resources'
 
@@ -66,6 +62,9 @@ class UserResource(db.Model):
                             db.ForeignKey('users.user_id'))
     resource_id = db.Column(db.Integer,
                             db.ForeignKey('resources.resource_id'))
+
+    user_id = db.relationship('User', backref='user_resources')
+    user_resource = db.relationship('Resource', backref='user_resources')
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
