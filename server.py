@@ -17,15 +17,27 @@ def homepage():
 
     return render_template('homepage.html')
 
-@app.route('/users')
+@app.route('/user')
 def users():
     """ View user """
 
     return render_template('user_details.html')
+    
+@app.route('/register', methods=['POST'])
+def register_user():
+    username = request.form['username']
+    password = request.form['password']
+
+    user = get_user_by_username(username):
+    if user:
+        return 'Username is already taken'
+        else:
+            create_user(username, password)
+            return redirect('/')
 
 @app.route('/categories')
 def categories():
-    """ View categories """
+    """ View all categories """
 
     categories = crud.get_category()
 
