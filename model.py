@@ -81,6 +81,11 @@ class UserResource(db.Model):
     user_id = db.relationship('User', backref='user_resources')
     user_resource = db.relationship('Resource', backref='user_resources')
 
+    def __repr__(self):
+        """ Show user resource information """
+
+    return f'<user_id={self.user_id}, resource_id={self.resource_id} user_resource={self.user_resource}>'
+
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
