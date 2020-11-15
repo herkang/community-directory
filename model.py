@@ -24,6 +24,11 @@ class User(db.Model):
         backref="users",
     )
 
+    def __repr__(self):
+        """ Show user information """
+
+    return f'<Id user_id={self.user_id} username={self.username} bookmarks ={seld.bookmarks}>'
+
 class Category(db.Model):
     """ Create a resource categories table """
 
@@ -32,7 +37,12 @@ class Category(db.Model):
     category_id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    category_name = db.Column(db.String)
+    category = db.Column(db.String)
+
+    def __repr__(self):
+        """ Show category information """
+
+    return f'<Id category_id={self.category_id} Category category={self.category}>'
 
 class Resource(db.Model):
     """ Create a resources table """
@@ -44,11 +54,16 @@ class Resource(db.Model):
                         autoincrement=True)
     category_id = db.Column(db.Integer,
                             db.ForeignKey('categories.category_id'))
-    resource_name = db.Column(db.String)
+    resource = db.Column(db.String)
     phone_number = db.Column(db.String)
     location = db.Column(db.String)
 
     category = db.relationship('Category', backref='resources')
+
+    def __repr__(self):
+        """ Show resource information """
+
+    return f'<Id resource_id={self.resource_id} Category category={self.category} Resource resource={self.resource}>'
 
 class UserResource(db.Model):
     """ Create a user resources table """
