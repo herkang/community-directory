@@ -23,10 +23,10 @@ def get_user_by_username(username):
     return User.query.filter(User.username == username).first()
 
 
-def create_category(category_name):
+def create_category(category):
     """ Create a category instance """
 
-    category = Category(category_name=category_name)
+    category = Category(category=category)
     db.session.add(category)
     db.session.commit()
 
@@ -37,10 +37,10 @@ def get_category():
 
     return Category.query.all()
 
-def create_resource(category, resource_name, phone_number, location):
+def create_resource(category, resource, phone_number, location):
     """ Creates a resource object"""
    
-    resource = Resource(category=category, resource_name=resource_name, phone_number=phone_number, location=location)
+    resource = Resource(category=category, resource=resource, phone_number=phone_number, location=location)
     db.session.add(resource)
     db.session.commit()  
 
@@ -53,12 +53,18 @@ def get_resource():
 
 def add_bookmark_by_id(resource_id):
     """ Creates an instance of bookmark resource"""
-   
+
     bookmarks = User_resource(resource_id=resource_id)
-    db.session.add(bookmark)
+    db.session.add(bookmarks)
     db.session.commit()
 
-    return bookmark
+    return bookmarks
+
+def get_bookmarK_by_user_id(user_id):
+    """ Return user's favorite """
+
+    #TODO: Get resource and create a list for favorites
+
 
 if __name__ == '__main__':
     from server import app
