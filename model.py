@@ -9,10 +9,10 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    username = db.Column(db.String,
+    username = db.Column(db.String(80),
                         nullable=False, 
                         unique= True)
     password = db.Column(db.String)
@@ -27,14 +27,14 @@ class User(db.Model):
     def __repr__(self):
         """ Show user information """
 
-    return f'<Id user_id={self.user_id} username={self.username} bookmarks ={seld.bookmarks}>'
+    return f'<Username =  {self.username} bookmarks = {self.bookmarks}>'
 
 class Category(db.Model):
     """ Create a resource categories table """
 
     __tablename__ = 'categories'
 
-    category_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
     category = db.Column(db.String)
@@ -42,18 +42,18 @@ class Category(db.Model):
     def __repr__(self):
         """ Show category information """
 
-    return f'<Id category_id={self.category_id} Category category={self.category}>'
+    return f'<Id = {self.id} Category = {self.category}>'
 
 class Resource(db.Model):
     """ Create a resources table """
 
     __tablename__ = 'resources'
 
-    resource_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
     category_id = db.Column(db.Integer,
-                            db.ForeignKey('categories.category_id'))
+                            db.ForeignKey('categories.id'))
     resource = db.Column(db.String)
     phone_number = db.Column(db.String)
     location = db.Column(db.String)
@@ -63,28 +63,28 @@ class Resource(db.Model):
     def __repr__(self):
         """ Show resource information """
 
-    return f'<Id resource_id={self.resource_id} Category category={self.category} Resource resource={self.resource}>'
+    return f'<Id = {self.id} Category = {self.category_id} Resource ={self.resource}>'
 
 class UserResource(db.Model):
     """ Create a user resources table """
 
     __tablename__ = 'user_resources'
 
-    user_res_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
     user_id = db.Column(db.Integer,
-                            db.ForeignKey('users.user_id'))
+                            db.ForeignKey('users.id'))
     resource_id = db.Column(db.Integer,
-                            db.ForeignKey('resources.resource_id'))
+                            db.ForeignKey('resources.id'))
 
-    user_id = db.relationship('User', backref='user_resources')
+    user_resource_id = db.relationship('User', backref='user_resources')
     user_resource = db.relationship('Resource', backref='user_resources')
 
     def __repr__(self):
         """ Show user resource information """
 
-    return f'<user_id={self.user_id}, resource_id={self.resource_id} user_resource={self.user_resource}>'
+    return f'<User Id = {self.user_id}, Resource Id = {self.resource_id} User Resource = {self.user_resource}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
