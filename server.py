@@ -31,7 +31,19 @@ Server: Here’s the HTML for that.
 Browser: I’d like to get the resource /calendar.jpg. Also, you told me to remind you that favorite_color is "blue".
 …"""
 
+"""
+Methods: GET and POST
+GET vs POST
+GET: passes arguments via the URL
 
+If you know the arguments, you can change the URL
+Many websites operate this way
+No side effect of the request (e.g. refreshing the page)
+
+POST: from additional data in request (like a dictionary!)
+Used for requests with side effects (e.g. saving data to a database)
+“Are you sure you want to resubmit?”
+"""
 
 
 @app.route('/')
@@ -39,23 +51,26 @@ def homepage():
     """ View homepage """
 
     return render_template('homepage.html')
+   
+@app.route('/user', methods=['POST'])
+def register_user():
+    """ Create a new user """
 
-# @app.route('/user')
-# def users():
-#    """ View user """
-#    return render_template('user_details.html')
-    
-# @app.route('/register', methods=['POST'])
-# def register_user():
-#     username = request.form['username']
-#     password = request.form['password']
+#TODO: Fix TypeError: 'method' object is not subscriptable
 
-#     user = get_user_by_username(username)
-#     if user:
-#         return 'Username is already taken'
-#         else:
-#             create_user(username, password)
-#             return redirect('/')
+
+    username = request.form.get['username']
+    password = request.form.get['password']
+
+    user = crud.get_user_by_username(username)
+    if user:
+        flash('Username already taken')
+    else:
+        crud.create_user(username, password)
+        flash('Account created! Please log in')
+    return redirect('/')
+
+#TODO: Create Login route and also function in crud.py
 
 # @app.route('/categories')
 # def categories():
@@ -69,7 +84,7 @@ def homepage():
 # def resources():
 #     """ View all resources """
 
-    #resources = crud.get_resource
+#     resources = crud.get_resource
 
 if __name__ == '__main__':
     connect_to_db(app)
