@@ -67,26 +67,32 @@ class Resource(db.Model):
 
         return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
 
-class UserResource(db.Model):
-    """ Create a user resources table """
+# class UserResource(db.Model):
+#     """ Create a user resources table """
 
-    __tablename__ = 'user_resources'
+#     __tablename__ = 'user_resources'
 
-    id = db.Column(db.Integer,
-                        primary_key=True,
-                        autoincrement=True)
-    user_id = db.Column(db.Integer,
-                            db.ForeignKey('users.id'))
-    resource_id = db.Column(db.Integer,
-                            db.ForeignKey('resources.id'))
+#     id = db.Column(db.Integer,
+#                         primary_key=True,
+#                         autoincrement=True)
+#     user_id = db.Column(db.Integer,
+#                             db.ForeignKey('users.id'))
+#     resource_id = db.Column(db.Integer,
+#                             db.ForeignKey('resources.id'))
 
-    user = db.relationship('User', backref='user_resources')
-    resource = db.relationship('Resource', backref='user_resources')
+#     user = db.relationship('User', backref='user_resources')
+#     resource = db.relationship('Resource', backref='user_resources')
 
-    def __repr__(self):
-        """ Show user resource information """
+#     def __repr__(self):
+#         """ Show user resource information """
 
-        return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
+#         return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
+
+
+user_resources = db.Table('user_resources',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
+)
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
