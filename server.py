@@ -11,37 +11,65 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+"""
+Cookies are name/string-value pair stored by the client (browser) 
+The server tells client to store requests:
+Site                Cookie Name                     Value
+
+ubermelon.com      number_visits                 “10”
+ubermelon.com      customer_type                 “Enterprise”
+localhost:5000     favorite_color                “blue”
+
+The client sends cookies to the server with each request
+
+Cookies (A Conversation)
+Browser: I’d like to get the resource /upcoming-events.
+Server: Here’s some HTML. Also, please remember this piece of information: favorite_color is "blue".
+Browser (stores this somewhere on the computer)
+Browser: I’d like to get the resource /event-detail. Also, you told me to remind you that favorite_color is "blue".
+Server: Here’s the HTML for that.
+Browser: I’d like to get the resource /calendar.jpg. Also, you told me to remind you that favorite_color is "blue".
+…"""
+
+
+
+
 @app.route('/')
 def homepage():
     """ View homepage """
 
     return render_template('homepage.html')
 
-@app.route('/user')
-def users():
-    """ View user """
-
-    return render_template('user_details.html')
+# @app.route('/user')
+# def users():
+#    """ View user """
+#    return render_template('user_details.html')
     
-@app.route('/register', methods=['POST'])
-def register_user():
-    username = request.form['username']
-    password = request.form['password']
+# @app.route('/register', methods=['POST'])
+# def register_user():
+#     username = request.form['username']
+#     password = request.form['password']
 
-    user = get_user_by_username(username):
-    if user:
-        return 'Username is already taken'
-        else:
-            create_user(username, password)
-            return redirect('/')
+#     user = get_user_by_username(username)
+#     if user:
+#         return 'Username is already taken'
+#         else:
+#             create_user(username, password)
+#             return redirect('/')
 
-@app.route('/categories')
-def categories():
-    """ View all categories """
+# @app.route('/categories')
+# def categories():
+#     """ View all categories """
 
-    categories = crud.get_category()
+#     categories = crud.get_category()
 
-    return render_template('category_details.html', categories=categories)
+#     return render_template('category_details.html', categories=categories)
+
+# @app.route('/resources')
+# def resources():
+#     """ View all resources """
+
+    #resources = crud.get_resource
 
 if __name__ == '__main__':
     connect_to_db(app)

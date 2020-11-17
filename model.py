@@ -27,7 +27,7 @@ class User(db.Model):
     def __repr__(self):
         """ Show user information """
 
-    return f'<Username =  {self.username} bookmarks = {self.bookmarks}>'
+        return f'<ID={self.id} Username={self.username}>'
 
 class Category(db.Model):
     """ Create a resource categories table """
@@ -42,7 +42,7 @@ class Category(db.Model):
     def __repr__(self):
         """ Show category information """
 
-    return f'<Id = {self.id} Category = {self.category}>'
+        return f'<ID={self.id} Category={self.category}>'
 
 class Resource(db.Model):
     """ Create a resources table """
@@ -62,8 +62,10 @@ class Resource(db.Model):
 
     def __repr__(self):
         """ Show resource information """
+    #TODO: Clarication on repr 
+    #datatable looks like this: id | category_id | resource | phone_number | location
 
-    return f'<Id = {self.id} Category = {self.category_id} Resource ={self.resource}>'
+        return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
 
 class UserResource(db.Model):
     """ Create a user resources table """
@@ -78,13 +80,13 @@ class UserResource(db.Model):
     resource_id = db.Column(db.Integer,
                             db.ForeignKey('resources.id'))
 
-    user_resource_id = db.relationship('User', backref='user_resources')
-    user_resource = db.relationship('Resource', backref='user_resources')
+    user = db.relationship('User', backref='user_resources')
+    resource = db.relationship('Resource', backref='user_resources')
 
     def __repr__(self):
         """ Show user resource information """
 
-    return f'<User Id = {self.user_id}, Resource Id = {self.resource_id} User Resource = {self.user_resource}>'
+        return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
