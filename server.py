@@ -1,15 +1,20 @@
 """ Server for directories """
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect)
+                   redirect, abort)
+from flask_login import LoginManager, login_user, login_required
 from model import connect_to_db
 import crud
 
 from jinja2 import StrictUndefined
+
 app = Flask(__name__)
+login_manager = LoginManager()
 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+
+login_manager.init_app(app)
 
 """
 Cookies are name/string-value pair stored by the client (browser) 
@@ -46,6 +51,16 @@ Used for requests with side effects (e.g. saving data to a database)
 """
 
 
+def is_safe_url(url):
+    """TODO: implement later."""
+    
+    return True
+
+@login_manager.user_loader
+def load_user(user_id):
+    
+    return crud.get_user(int(user_id))
+
 @app.route('/')
 def homepage():
     """ View homepage """
@@ -56,8 +71,8 @@ def homepage():
 def register_user():
     """ Create a new user """
 
-    username = request.form.get['username']
-    password = request.form.get['password']
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     user = crud.get_user_by_username(username)
 
@@ -68,27 +83,58 @@ def register_user():
         flash('Account created! Please log in')
     return redirect('/')
 
-@app.route('/profile')
-def profile():
-    """ Return user profile """
 
-    return render_template('profile.html')
-
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    """ Create user name """
-
-    return render_template('login.html')
-
     username = request.form.get('username')
     password = request.form.get('password')
 
+    user = crud.get_user_by_username(username)
+
     if user:
-        session['user_id'] = users.id
-        return redirect('/profile')
+        # Check password, if password matches, call login_user
+        if password == user.password:
+            login_user(user)
+            
+            flash('Welcome back!')
+            
+            next_ = request.args.get('next')
+            if not is_safe_url(next_):
+                return abort(400)
+
+            return redirect(next_ or '/profile')
+        else:
+            flash('Wrong password')
     else:
-        flash('Username or password is incorrect')
-        return redirect('/login')
+        # Tell user that the account doesn't exist
+        flash("User doesn't exit")
+
+    return redirect('/')
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    """Return user profile"""
+
+    return render_template('profile.html')
+
+
+# @app.route('/login', methods=['POST'])
+# def login():
+#     """ Create user name """
+
+#     return render_template('login.html')
+
+#     username = request.form.get('username')
+#     password = request.form.get('password')
+
+#     if user:
+#         session['user_id'] = users.id
+#         return redirect('/profile')
+#     else:
+#         flash('Username or password is incorrect')
+#         return redirect('/login')
 
 @app.route('/categories')
 def categories():
