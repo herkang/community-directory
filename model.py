@@ -78,18 +78,18 @@ class Bookmark(db.Model):
     resource_id = db.Column(db.Integer,
                             db.ForeignKey('resources.id'))
 
-    user = db.relationship('User', backref='user_resources')
-    resource = db.relationship('Resource', backref='user_resources')
+    user = db.relationship('User', backref='bookmarks')
+    resource = db.relationship('Resource', backref='bookmarks')
 
     def __repr__(self):
         """ Show user resource information """
 
         return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
 
-user_resources = db.Table('user_resources',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
-)
+# user_resources = db.Table('user_resources',
+#     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+#     db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
+# )
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
