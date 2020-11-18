@@ -68,6 +68,28 @@ def register_user():
         flash('Account created! Please log in')
     return redirect('/')
 
+@app.route('/profile')
+def profile():
+    """ Return user profile """
+
+    return render_template('profile.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    """ Create user name """
+
+    return render_template('login.html')
+
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if user:
+        session['user_id'] = users.id
+        return redirect('/profile')
+    else:
+        flash('Username or password is incorrect')
+        return redirect('/login')
+
 @app.route('/categories')
 def categories():
     """ View all categories """
@@ -80,7 +102,7 @@ def categories():
 def resources():
     """ View all resources """
 
-    resources = crud.get_resource
+    resources = crud.get_resource()
 
 if __name__ == '__main__':
     connect_to_db(app)
