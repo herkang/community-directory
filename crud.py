@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Category, Resource, UserResource, connect_to_db
+from model import db, User, Category, Resource, connect_to_db 
 
 """
 For all user related functions, returns will be something like:
@@ -15,6 +15,10 @@ def create_user(username, password):
     db.session.commit()
 
     return new_user
+def create_login():
+    """ Create logins """
+    username = User.query.get(username)
+    password = User.query.get(password)
 
 def get_user(id):
     """ Return user by primary key """
@@ -43,9 +47,6 @@ def get_category():
 
     return Category.query.all()
 
-#TODO: Add category relationship, resource functions not properly working
-
-
 def create_resource(resource, phone_number, location):
     """ Create and return a new resource instance 
     Will return: 'Confederation of Somali'
@@ -72,17 +73,19 @@ def get_resource_by_id(id):
 
     return Resource.query.filter(Resource.id==id).first()
 
-# def add_bookmark_by_id(resource_id):
-#     """ Create and return a bookmark resource instance """
+def add_bookmark_by_id(user, resource, bookmark):
+    """ Create and return a bookmark resource instance """
 
-#     new_bookmarks = UserResource(resource_id=resource_id)
-#     db.session.add(new_bookmarks)
-#     db.session.commit()
+    new_bookmarks = Bookmarks(user=user, resouce=resource, bookmark=bookmark)
+    db.session.add(new_bookmarks)
+    db.session.commit()
 
-#     return new_bookmarks
+    return new_bookmarks
 
-# def get_bookmarks_by_user_id(user_id):
-#     """ Return user's favorite """
+def get_bookmarks_by_user_id(user_id):
+    """ Return user's favorite """
+
+    return Bookmark.quey.all(user_id)
 
 if __name__ == '__main__':
     from server import app
