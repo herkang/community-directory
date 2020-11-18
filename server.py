@@ -74,7 +74,7 @@ def profile():
 
     return render_template('profile.html')
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET'])
 def login():
     """ Create user name """
 
