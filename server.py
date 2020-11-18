@@ -56,13 +56,11 @@ def homepage():
 def register_user():
     """ Create a new user """
 
-#TODO: Fix TypeError: 'method' object is not subscriptable
-
-
     username = request.form.get['username']
     password = request.form.get['password']
 
     user = crud.get_user_by_username(username)
+
     if user:
         flash('Username already taken')
     else:
@@ -70,21 +68,19 @@ def register_user():
         flash('Account created! Please log in')
     return redirect('/')
 
-#TODO: Create Login route and also function in crud.py
+@app.route('/categories')
+def categories():
+    """ View all categories """
 
-# @app.route('/categories')
-# def categories():
-#     """ View all categories """
+    categories = crud.get_category()
 
-#     categories = crud.get_category()
+    return render_template('category_details.html', categories=categories)
 
-#     return render_template('category_details.html', categories=categories)
+@app.route('/resources')
+def resources():
+    """ View all resources """
 
-# @app.route('/resources')
-# def resources():
-#     """ View all resources """
-
-#     resources = crud.get_resource
+    resources = crud.get_resource
 
 if __name__ == '__main__':
     connect_to_db(app)
