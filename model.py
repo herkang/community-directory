@@ -1,10 +1,11 @@
 """ Models for minority community resource directory """
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """ Create users table """
 
     __tablename__ = 'users'
@@ -28,6 +29,12 @@ class User(db.Model):
         """ Show user information """
 
         return f'<ID={self.id} Username={self.username}>'
+        
+    def get_id(self):
+        """Override flask_login.UserMixin."""
+        
+        return str(self.id)
+
 
 class Category(db.Model):
     """ Create a resource categories table """
