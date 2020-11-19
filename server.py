@@ -1,8 +1,8 @@
-""" Server for directories """
+"""Server for directories"""
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, abort)
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user
 from model import connect_to_db
 import crud
 
@@ -16,41 +16,6 @@ app.jinja_env.undefined = StrictUndefined
 
 login_manager.init_app(app)
 
-"""
-Cookies are name/string-value pair stored by the client (browser) 
-The server tells client to store requests:
-Site                Cookie Name                     Value
-
-ubermelon.com      number_visits                 “10”
-ubermelon.com      customer_type                 “Enterprise”
-localhost:5000     favorite_color                “blue”
-
-The client sends cookies to the server with each request
-
-Cookies (A Conversation)
-Browser: I’d like to get the resource /upcoming-events.
-Server: Here’s some HTML. Also, please remember this piece of information: favorite_color is "blue".
-Browser (stores this somewhere on the computer)
-Browser: I’d like to get the resource /event-detail. Also, you told me to remind you that favorite_color is "blue".
-Server: Here’s the HTML for that.
-Browser: I’d like to get the resource /calendar.jpg. Also, you told me to remind you that favorite_color is "blue".
-…"""
-
-"""
-Methods: GET and POST
-GET vs POST
-GET: passes arguments via the URL
-
-If you know the arguments, you can change the URL
-Many websites operate this way
-No side effect of the request (e.g. refreshing the page)
-
-POST: from additional data in request (like a dictionary!)
-Used for requests with side effects (e.g. saving data to a database)
-“Are you sure you want to resubmit?”
-"""
-
-
 def is_safe_url(url):
     """TODO: implement later."""
     
@@ -58,18 +23,18 @@ def is_safe_url(url):
 
 @login_manager.user_loader
 def load_user(user_id):
-    
+
     return crud.get_user(int(user_id))
 
 @app.route('/')
 def homepage():
-    """ View homepage """
+    """View homepage"""
 
     return render_template('homepage.html')
    
 @app.route('/user', methods=['POST'])
 def register_user():
-    """ Create a new user """
+    """Create a new user"""
 
     username = request.form.get('username')
     password = request.form.get('password')
@@ -86,6 +51,7 @@ def register_user():
 
 @app.route('/login', methods=['POST'])
 def login():
+
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -119,6 +85,11 @@ def profile():
 
     return render_template('profile.html')
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 # @app.route('/login', methods=['POST'])
 # def login():
@@ -138,17 +109,20 @@ def profile():
 
 @app.route('/categories')
 def categories():
-    """ View all categories """
+    """View all categories"""
 
     categories = crud.get_category()
 
-    return render_template('category_details.html', categories=categories)
+    return render_template('all_categories.html', categories=categories)
 
 @app.route('/resources')
 def resources():
-    """ View all resources """
+    """View all resources"""
+#TODO: TypeError: get_resource_by_id() missing 1 required positional argument: 'id'
+#Connect category and resources
+    resources = crud.get_all_resources()
 
-    resources = crud.get_resource()
+    return render_template('all_resources.html', resources=resources)
 
 if __name__ == '__main__':
     connect_to_db(app)
