@@ -25,11 +25,11 @@ summary = table.find_all('tr')
 #similiar to table above, but can't prettify
 #print(summary)
 
-def data(summary):
+# def data(summary):
 
-    item_in_list = []
-    for row in summary:
-        for td in row.find_all('td'):
-            item_in_list.append(td.text)
-    return item_in_list
+#     item_in_list = []
+#     for row in summary:
+#         for td in row.find_all('td'):
+#             item_in_list.append(td.text)
+#     return item_in_list
 

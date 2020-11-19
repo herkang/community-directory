@@ -3,5 +3,9 @@
 {% block title %}{{ current_user.username }}'s Page{% endblock %}
 
 {% block body %}
-<h1>{{ current_user.username }}</h1>
+<h1>Hi {{ current_user.username }}</h1>
+
+{% for bookmark in bookmarks %}
+  <p>{{ bookmark }}</p>
+
 {% endblock %}

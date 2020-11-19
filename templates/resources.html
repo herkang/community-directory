@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Resources{% endblock %}
+
+{% block body %}
+
+{% for resource in resources %}
+  <p>{{ resource }}</p>
+{% endfor %}
+
+{% endblock %}

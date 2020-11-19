@@ -31,11 +31,17 @@ def homepage():
     """View homepage"""
 
     return render_template('homepage.html')
-   
-@app.route('/user', methods=['POST'])
+
+@app.route('/signup')
+def signup_form():
+    """View sign up form"""
+
+    return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
 def register_user():
     """Create a new user"""
-
+    
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -46,8 +52,7 @@ def register_user():
     else:
         crud.create_user(username, password)
         flash('Account created! Please log in')
-    return redirect('/')
-
+    return redirect('/login')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -77,13 +82,19 @@ def login():
 
     return redirect('/')
 
-
 @app.route('/profile')
 @login_required
 def profile():
     """Return user profile"""
 
     return render_template('profile.html')
+
+# @app.route('/resources')
+# @login_required
+# def resources():
+#     """Return resources in categories"""
+
+#     return render_template('resources.html')
 
 @app.route('/logout')
 @login_required

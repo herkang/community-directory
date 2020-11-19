@@ -70,6 +70,10 @@ def get_resource_by_id(id):
 
     return Resource.query.filter(Resource.id==id).first()
 
+def get_resources_by_category(category):
+
+    return Resource.query.filter(Resource.category_id==category).all()
+    
 def add_bookmark_by_id(user, resource, bookmark):
     """Create and return a bookmark resource instance"""
 
