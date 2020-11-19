@@ -1,4 +1,4 @@
-""" Models for minority community resource directory """
+"""Models for minority community resource directory"""
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -6,7 +6,7 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 
 class User(db.Model, UserMixin):
-    """ Create users table """
+    """Create users table"""
 
     __tablename__ = 'users'
 
@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
     # )
 
     def __repr__(self):
-        """ Show user information """
+        """Show user information"""
 
         return f'<ID={self.id} Username={self.username}>'
         
@@ -37,7 +37,7 @@ class User(db.Model, UserMixin):
 
 
 class Category(db.Model):
-    """ Create a resource categories table """
+    """Create a resource categories table"""
 
     __tablename__ = 'categories'
 
@@ -47,12 +47,12 @@ class Category(db.Model):
     category = db.Column(db.String)
 
     def __repr__(self):
-        """ Show category information """
+        """Show category information"""
 
-        return f'<ID={self.id} Category={self.category}>'
+        return f'<Category={self.category}>'
 
 class Resource(db.Model):
-    """ Create a resources table """
+    """Create a resources table"""
 
     __tablename__ = 'resources'
 
@@ -62,18 +62,18 @@ class Resource(db.Model):
     category_id = db.Column(db.Integer,
                             db.ForeignKey('categories.id'))
     resource = db.Column(db.String)
-    phone_number = db.Column(db.String)
+    contact = db.Column(db.String)
     location = db.Column(db.String)
 
     category = db.relationship('Category', backref='resources')
 
     def __repr__(self):
-        """ Show resource information """
+        """Show resource information"""
 
-        return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
+        return f'<ID={self.id} Category ID={self.category} Resource={self.resource}>'
 
 class Bookmark(db.Model):
-    """ Create a user resources table """
+    """Create a user resources table"""
 
     __tablename__ = 'bookmarks'
 
@@ -89,7 +89,7 @@ class Bookmark(db.Model):
     resource = db.relationship('Resource', backref='bookmarks')
 
     def __repr__(self):
-        """ Show user resource information """
+        """Show user resource information"""
 
         return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
 
