@@ -2,10 +2,6 @@
 
 from model import db, User, Category, Resource, Bookmark, connect_to_db 
 
-"""
-For all user related functions, returns will be something like:
- <ID=1 Username=Jet>
-"""
 def create_user(username, password):
     """Create and return a new user instance"""
 
@@ -15,6 +11,7 @@ def create_user(username, password):
     db.session.commit()
 
     return new_user
+    
 def create_login():
     """Create logins"""
     username = User.query.get(username)
@@ -45,9 +42,12 @@ def get_category():
         
     return Category.query.all() #will return [<ID=1 Category=Africans>, <ID=2 Category=American Indian>]
 
+def get_category_by_id(id):
+
+    return Category.query.get(id)
+
 def create_resource(resource, contact, location, category):
     """Create and return a new resource instance"""
-#TODO: Relationsip not working     
     
     new_resource = Resource(resource=resource, contact=contact, location=location, category=new_category)
     db.session.add(new_resource)
@@ -55,13 +55,8 @@ def create_resource(resource, contact, location, category):
 
     return resource #will return 'Confederation of Somali'
 
-""" TODO: Fix relationship for resource-category
-BOTH get_all_resources and get_resource_by_id will return:
- [<ID=1 Category ID=None Resource=Confederation of Somali>]
-""" 
 def get_all_resources():
     """Returns all resources"""
-#TODO: Fix querying for all resource
 
     return Resource.query.all()
 
@@ -86,7 +81,7 @@ def add_bookmark_by_id(user, resource, bookmark):
 def get_bookmarks_by_user_id(user_id):
     """Return user's favorite"""
 
-    return Bookmark.quey.all(user_id)
+    return Bookmark.query.get(user_id)
 
 if __name__ == '__main__':
     from server import app

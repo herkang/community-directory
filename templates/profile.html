@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ current_user.username }}'s Page{% endblock %}
+{% block title %}{{ current_user.username }}'s Profile{% endblock %}
 
 {% block body %}
 <h1>Hi {{ current_user.username }}</h1>
 
 {% for bookmark in bookmarks %}
-  <p>{{ bookmark }}</p>
+<section class="bookmark_list_item">
+  <h2>User: {{ bookmark.user }}</h2>
+  <ul>
+    
+    <li>Resource: {{ bookmark.resource }}</li>
+   
+  </ul>
+</section>
+{% endfor %}
 
 {% endblock %}

@@ -70,7 +70,7 @@ class Resource(db.Model):
     def __repr__(self):
         """Show resource information"""
 
-        return f'<ID={self.id} Category ID={self.category} Resource={self.resource}>'
+        return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
 
 class Bookmark(db.Model):
     """Create a user resources table"""

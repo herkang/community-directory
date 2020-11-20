@@ -26,4 +26,12 @@
     </p>
   </form>
 
+  <h1>All Categories</h1>
+
+  {% for category in categories %}
+  <section class="catefory_list_item">
+    <li>Category: {{ category.category }}</li>
+
+  </section>
+  {% endfor %}
 {% endblock %}

@@ -2,9 +2,17 @@
 {% block title %}Resources{% endblock %}
 
 {% block body %}
+<h1>All Resources</h1>
 
 {% for resource in resources %}
-  <p>{{ resource }}</p>
+<section class="resource_list_item">
+  <h2>{{ resource.resource }}</h2>
+  <ul>
+    <li>Location: {{ resource.location }}</li>
+    <li>Contact: {{ resource.contact }}</li>
+    <li>Category: {{ resource.category.category }}</li>
+  </ul>
+</section>
 {% endfor %}
 
 {% endblock %}
