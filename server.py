@@ -29,8 +29,9 @@ def load_user(user_id):
 @app.route('/')
 def homepage():
     """View homepage"""
+    categories = crud.get_category()
 
-    return render_template('homepage.html')
+    return render_template('homepage.html', categories=categories)
 
 @app.route('/signup')
 def signup_form():
@@ -52,7 +53,7 @@ def register_user():
     else:
         crud.create_user(username, password)
         flash('Account created! Please log in')
-    return redirect('/login')
+    return redirect('/')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -85,7 +86,7 @@ def login():
 @app.route('/profile')
 @login_required
 def profile():
-    """Return user profile"""
+    """Return user profile and saved resources"""
 
     return render_template('profile.html')
 
@@ -118,7 +119,7 @@ def logout():
 #         flash('Username or password is incorrect')
 #         return redirect('/login')
 
-@app.route('/categories')
+@app.route('/categories') #already shown in hompage
 def categories():
     """View all categories"""
 
@@ -126,14 +127,20 @@ def categories():
 
     return render_template('all_categories.html', categories=categories)
 
+@app.route('/categories/<category_id>')
+def category(category_id):
+    """Show all resources for this category."""
+
+    category = crud.get_category_by_id(category_id)
+    return render_template('category.html', category=category)
+
 @app.route('/resources')
 def resources():
-    """View all resources"""
-#TODO: TypeError: get_resource_by_id() missing 1 required positional argument: 'id'
-#Connect category and resources
+    """View all resources in category"""
+
     resources = crud.get_all_resources()
 
-    return render_template('all_resources.html', resources=resources)
+    return render_template('resources.html', resources=resources)
 
 if __name__ == '__main__':
     connect_to_db(app)
