@@ -29,6 +29,7 @@ def load_user(user_id):
 @app.route('/')
 def homepage():
     """View homepage"""
+
     categories = crud.get_category()
 
     return render_template('homepage.html', categories=categories)
@@ -49,11 +50,17 @@ def register_user():
     user = crud.get_user_by_username(username)
 
     if user:
-        flash('Username already taken')
+        flash('Username taken! Please create one.')
+        return redirect('/signup')
     else:
         crud.create_user(username, password)
-        flash('Account created! Please log in')
-    return redirect('/')
+        flash('Account created! Please log in.')    
+        return redirect('/login')
+
+@app.route('/login')
+def login_form():
+
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -71,15 +78,17 @@ def login():
             flash('Welcome back!')
             
             next_ = request.args.get('next')
+          
             if not is_safe_url(next_):
                 return abort(400)
+            return redirect(next_ or '/profile' )
 
-            return redirect(next_ or '/profile')
         else:
-            flash('Wrong password')
+            flash('Wrong password, try again.')
+            
     else:
         # Tell user that the account doesn't exist
-        flash("User doesn't exit")
+        flash("User doesn't exit, please sign up!")
 
     return redirect('/')
 
@@ -88,36 +97,13 @@ def login():
 def profile():
     """Return user profile and saved resources"""
 
-    return render_template('profile.html')
-
-# @app.route('/resources')
-# @login_required
-# def resources():
-#     """Return resources in categories"""
-
-#     return render_template('resources.html')
+    return render_template('profile.html', bookmarks=[])
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
-
-# @app.route('/login', methods=['POST'])
-# def login():
-#     """ Create user name """
-
-#     return render_template('login.html')
-
-#     username = request.form.get('username')
-#     password = request.form.get('password')
-
-#     if user:
-#         session['user_id'] = users.id
-#         return redirect('/profile')
-#     else:
-#         flash('Username or password is incorrect')
-#         return redirect('/login')
+    return redirect('/categories') 
 
 @app.route('/categories') #already shown in hompage
 def categories():
@@ -132,15 +118,24 @@ def category(category_id):
     """Show all resources for this category."""
 
     category = crud.get_category_by_id(category_id)
+
     return render_template('category.html', category=category)
 
 @app.route('/resources')
-def resources():
+def all_resources():
     """View all resources in category"""
 
     resources = crud.get_all_resources()
 
     return render_template('resources.html', resources=resources)
+
+@app.route('/resources/<resource_id>')
+def resource(resource_id):
+    """"View selected category resource"""
+
+    resource = crud.get_resources_by_category(resource_id)
+
+    return render_template('resource.html', resource=resource)
 
 if __name__ == '__main__':
     connect_to_db(app)
