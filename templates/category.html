@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Categories{% endblock %}
+{% block title %}Category{% endblock %}
 
 {% block body %}
 
@@ -7,17 +7,15 @@
   <ul>
     <li><a href="/categories">Categories</a></li>
     <li><a href="/resources">Resources</a></li>
-    <li><a href="/profile">profile</a></li>
+    <li><a href="/profile">Profile</a></li>
     <li><a href="/login">Login</a></li>
 
   </ul>
   
-<h1>All Categories</h1>
+<h1>Categories</h1>
 
-{% for category in categories %}
-  <section class="catefory_list_item">
-    <li>Category: {{ category.category }}</li>
-  </section>
-{% endfor %}
+
+    <li>Category: {{ Category }}</li>
+
 
 {% endblock %}
