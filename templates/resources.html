@@ -14,13 +14,16 @@
 
 <h1>Resources</h1>
 
-<section class="resource_list_item">
-  <h2>{{ resource.resource }}</h2>
-  <ul>
-    <li>Location: {{ resource.location }}</li>
-    <li>Contact: {{ resource.contact }}</li>
-    <li>Category: {{ resource.category.category }}</li>
-  </ul>
-</section>
+
+    <p>Resources:
+      <a href="/resources/{{ resource.id }}">
+       {{ resource.resource }}
+    </a>
+    <ul>
+      <li>Location: {{ resource.location }}</li>
+      <li>Contact: {{ resource.contact }}</li>
+      <li>Category: {{ resource.category.category }}</li>
+    </ul>
+  </p>
 
 {% endblock %}
