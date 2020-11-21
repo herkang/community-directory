@@ -46,6 +46,10 @@ def get_category_by_id(id):
 
     return Category.query.get(id)
 
+def get_category_by_name(category):
+
+    return Category.query.get(Category.category==category).first()
+
 def create_resource(resource, contact, location, category):
     """Create and return a new resource instance"""
     

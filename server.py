@@ -127,7 +127,7 @@ def all_resources():
 
     resources = crud.get_all_resources()
 
-    return render_template('resources.html', resources=resources)
+    return render_template('all_resources.html', resources=resources)
 
 @app.route('/resources/<resource_id>')
 def resource(resource_id):
@@ -135,7 +135,7 @@ def resource(resource_id):
 
     resource = crud.get_resources_by_category(resource_id)
 
-    return render_template('resource.html', resource=resource)
+    return render_template('resources.html', resource=resource)
 
 if __name__ == '__main__':
     connect_to_db(app)

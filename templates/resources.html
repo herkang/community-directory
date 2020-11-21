@@ -14,7 +14,6 @@
 
 <h1>Resources</h1>
 
-{% for resource in resources %}
 <section class="resource_list_item">
   <h2>{{ resource.resource }}</h2>
   <ul>
@@ -23,6 +22,5 @@
     <li>Category: {{ resource.category.category }}</li>
   </ul>
 </section>
-{% endfor %}
 
 {% endblock %}

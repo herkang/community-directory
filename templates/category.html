@@ -12,10 +12,15 @@
 
   </ul>
   
-<h1>Categories</h1>
+<h1>Category</h1>
 
-
-    <li>Category: {{ Category }}</li>
-
+<li>
+  <a href="/categories/{{ category.id }}">
+  Category: {{ category.category }}
+</a>
+</li>
+<p>
+ some fun facts about category
+</p>
 
 {% endblock %}
