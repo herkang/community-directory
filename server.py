@@ -131,9 +131,9 @@ def all_resources():
 
 @app.route('/resources/<resource_id>')
 def resource(resource_id):
-    """"View selected category resource"""
+    """View selected category resource"""
 
-    resource = crud.get_resources_by_category(resource_id)
+    resource = crud.get_resource_by_id(resource_id)
 
     return render_template('resources.html', resource=resource)
 
