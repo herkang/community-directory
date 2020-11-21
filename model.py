@@ -49,7 +49,7 @@ class Category(db.Model):
     def __repr__(self):
         """Show category information"""
 
-        return f'<Category={self.category}>'
+        return f'<Category={self.id}>'
 
 class Resource(db.Model):
     """Create a resources table"""
