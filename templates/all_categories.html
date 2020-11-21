@@ -16,9 +16,13 @@
 <h1>All Categories</h1>
 
 {% for category in categories %}
-  <section class="catefory_list_item">
+  <section class="category_list_item">
     
-    <li>Category: {{ category.category }}</li>
+    <li>
+      <a href="/categories/{{ category.id }}">
+      Category: {{ category.category }}
+    </a>
+    </li>
   </section>
 {% endfor %}
 
