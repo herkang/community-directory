@@ -15,14 +15,20 @@
 <h1>All Resources</h1>
 
 {% for resource in resources %}
-<section class="resource_list_item">
-  <h2>{{ resource.resource }}</h2>
-  <ul>
-    <li>Location: {{ resource.location }}</li>
-    <li>Contact: {{ resource.contact }}</li>
-    <li>Category: {{ resource.category.category }}</li>
-  </ul>
-</section>
+  <section class="resource_list_item">
+    
+    <li>Resource:
+      <a href="/resources/{{ resource.id }}">
+       {{ resource.resource }}
+    </a>
+    <ul>
+      <li>Location: {{ resource.location }}</li>
+      <li>Contact: {{ resource.contact }}</li>
+      <li>Category: {{ resource.category.category }}</li>
+    </ul>
+    </li>
+  </section>
 {% endfor %}
+
 
 {% endblock %}
