@@ -53,11 +53,11 @@ def get_category_by_name(category):
 def create_resource(resource, contact, location, category):
     """Create and return a new resource instance"""
     
-    new_resource = Resource(resource=resource, contact=contact, location=location, category=new_category)
+    new_resource = Resource(resource=resource, contact=contact, location=location, category=category)
     db.session.add(new_resource)
     db.session.commit()  
 
-    return resource 
+    return new_resource 
 
 def get_all_resources():
     """Returns all resources"""
@@ -73,14 +73,14 @@ def get_resources_by_category(category):
 
     return Resource.query.filter(Resource.category_id==category).all()
     
-def add_bookmark_by_resource(resource):
+def add_bookmark(user_id, resource_id):
     """Create and return a bookmark resource instance"""
 
-    bookmark = User(resouce=resource)
-    db.session.add(bookmark)
+    new_bookmark = Bookmark(user_id=user_id, resource_id=resource_id)
+    db.session.add(new_bookmark)
     db.session.commit()
 
-    return bookmark
+    return new_bookmark
 
 def create_bookmark_list(id):
 

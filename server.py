@@ -123,16 +123,13 @@ def categories():
 @app.route('/categories/<category_id>')
 def category(category_id):
 
+
     category = crud.get_category_by_id(category_id)
 
     return render_template('category.html', category=category)
 
-# @app.route('/categories', methods=['POST'])
-# def create_category(category):
-#return crud.create_category(category)
-#create something similiar for resource 
 
-@app.route('/resources/<category_id>')
+@app.route('/resources/<category_id>', methods=['POST'])
 def create_resource(resource, contact, location, category_id):
 
     resource = crud.create_resource(resource, contact, location, category_id)
