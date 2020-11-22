@@ -13,19 +13,18 @@
   </ul>
 
 
-
   <form id="bookmark-form" method="post" action="/resources">
 
     <div class="form-group">
       <label for="resource-field">Resource</label>
       <select name="reource" class="form-control" id="type-field">
 
-        {% for resource in resources %}
+        {% for item in resource %}
           <section class="resource_list_item">
             
             <p>Resources:
               <a href="/resources/{{ resource.id }}">
-              {{ resource.resource }}
+              {{ item.resource }}
             </a>
             <ul>
               fun facts about resources

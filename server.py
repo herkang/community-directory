@@ -111,30 +111,24 @@ def create_category(category):
 
     return crud.create_category(category)
 
-
 @app.route('/categories') #already shown in hompage
 def categories():
     """View all categories"""
-
-    categories = crud.get_category()
-
-    return render_template('all_categories.html', categories=categories)
+    # categories = crud.get_category()
+    # return render_template('all_categories.html', categories=categories)
+    return redirect('/')
 
 @app.route('/categories/<category_id>')
 def category(category_id):
-
 
     category = crud.get_category_by_id(category_id)
 
     return render_template('category.html', category=category)
 
+@app.route('/resources', methods=['POST'])
+def create_resource(resource, contact, location, category):
 
-@app.route('/resources/<category_id>', methods=['POST'])
-def create_resource(resource, contact, location, category_id):
-
-    resource = crud.create_resource(resource, contact, location, category_id)
-
-    return render_template('resource.html', resource=resource, contact=contact, location=location, category_id=category_id)
+    return crud.create_resource(resource, contact, location, category)
 
 @app.route('/resources')
 def all_resources():
@@ -144,7 +138,7 @@ def all_resources():
 
     return render_template('all_resources.html', resources=resources)
 
-@app.route('/resources/<resource_id>')
+@app.route('/resources/<category_id>')
 def resource(resource_id):
     """View selected category resource"""
 

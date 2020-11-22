@@ -5,10 +5,10 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-user_resources = db.Table('user_resources',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
-)
+# user_resources = db.Table('user_resources',
+#     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+#     db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
+# )
 
 class User(db.Model, UserMixin):
     """Create users table"""
@@ -23,12 +23,12 @@ class User(db.Model, UserMixin):
                         unique= True)
     password = db.Column(db.String)
 
-    # bookmarks: List[Resource]
-    bookmarks = db.relationship(
-        "Resource",
-        secondary="user_resources",
-        backref="users",
-    )
+    # # bookmarks: List[Resource]
+    # bookmarks = db.relationship(
+    #     "Resource",
+    #     secondary="user_resources",
+    #     backref="users",
+    # )
 
     def __repr__(self):
         """Show user information"""
@@ -77,26 +77,26 @@ class Resource(db.Model):
 
         return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
 
-# class Bookmark(db.Model):
-#     """Create a user resources table"""
+class Bookmark(db.Model):
+    """Create a user resources table"""
 
-#     __tablename__ = 'bookmarks'
+    __tablename__ = 'bookmarks'
 
-#     id = db.Column(db.Integer,
-#                         primary_key=True,
-#                         autoincrement=True)
-#     user_id = db.Column(db.Integer,
-#                             db.ForeignKey('users.id'))
-#     resource_id = db.Column(db.Integer,
-#                             db.ForeignKey('resources.id'))
+    id = db.Column(db.Integer,
+                        primary_key=True,
+                        autoincrement=True)
+    user_id = db.Column(db.Integer,
+                            db.ForeignKey('users.id'))
+    resource_id = db.Column(db.Integer,
+                            db.ForeignKey('resources.id'))
 
-#     user = db.relationship('User', backref='bookmarks')
-#     resource = db.relationship('Resource', backref='bookmarks')
+    user = db.relationship('User', backref='bookmarks')
+    resource = db.relationship('Resource', backref='bookmarks')
 
-#     def __repr__(self):
-#         """Show user resource information"""
+    def __repr__(self):
+        """Show user resource information"""
 
-#         return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
+        return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):

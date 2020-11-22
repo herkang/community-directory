@@ -20,4 +20,3 @@ resource_in_db = []
 for resource in resource_data:
     #TODO: Add datas
     #https://fellowship.hackbrightacademy.com/materials/t2/exercises/ratings-v2/index-2.html
-fdfd 

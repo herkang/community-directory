@@ -10,20 +10,17 @@
     <li><a href="/categories">Categories</a></li>
     <li><a href="/resources">Resources</a></li>
     <li><a href="/logout">Logout</a></li>
-
   </ul>
 
 {% for bookmark in bookmarks %}
-<section class="bookmark_list_item">
-  <h2>User: {{ bookmark.user }}</h2>
-  <ul>
+  <section class="bookmark_list_item">
     
-    <li>Resource: {{ bookmark.resource }}</li>
-   
-  </ul>
-</section>
-
-
+    <li>Bookmarks:
+      <a href="/profile/ {{ bookmark.user_id }}">
+       {{ bookmark.resource }}
+    </a>
+    </li>
+  </section>
 {% endfor %}
 
 {% endblock %}

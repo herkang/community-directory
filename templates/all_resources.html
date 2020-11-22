@@ -12,23 +12,35 @@
 
   </ul>
 
-<h1>All Resources</h1>
-
-{% for resource in resources %}
-  <section class="resource_list_item">
-    
-    <p>Resources:
-      <a href="/resources/{{ resource.id }}">
-       {{ resource.resource }}
-    </a>
-    <ul>
-      <li>Location: {{ resource.location }}</li>
-      <li>Contact: {{ resource.contact }}</li>
-      <li>Category: {{ resource.category.category }}</li>
-    </ul>
-  </p>
-  </section>
-{% endfor %}
+<h1>Resources</h1>
 
 
+<form id="bookmark-form" method="post" action="/resources">
+
+  <div class="form-group">
+    <label for="resource-field">Resource</label>
+    <select name="reource" class="form-control" id="type-field">
+
+      {% for resource in resources %}
+      <option value="{{ resource }}">{{ resource }}</option>         
+      
+      <section class="resource_list_item">
+          
+          <p>Resources:
+            <a href="/resources/{{ resource.id }}">
+            {{ resource.resource }}
+          </a>
+
+        </p>
+        </section>          <ul>
+            fun facts about resources
+          </ul>
+      {% endfor %}
+
+    </select>
+  </div>
+ 
+  <input type="submit" class="btn btn-primary">
+
+</form>
 {% endblock %}
