@@ -1,7 +1,7 @@
 """Server for directories"""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect, abort)
+                   redirect, abort, jsonify)
 from flask_login import LoginManager, login_user, login_required, logout_user
 from model import connect_to_db
 import crud
@@ -136,6 +136,38 @@ def resource(resource_id):
     resource = crud.get_resource_by_id(resource_id)
 
     return render_template('resources.html', resource=resource)
+########## Create Bookmark ##########
+
+@app.route('/profile/<user_id>')
+@login_required
+def user_resource(user_id):
+    """Return user profile and saved resources"""
+
+    bookmarks = crud.get_bookmarks_by_user_id(user_id)
+
+    return render_template('profile.html', bookmarks=bookmarks)
+
+# @app.route("/bookmark-info.json")
+# def melon_info():
+#     """Return info about a bookmark as JSON."""
+
+#     # In real life, we would probably get this info
+#     # from our database
+#     bookmark = {
+#         "id": "1",
+#         "username": "test1",
+#         "bookmark": ["US", "CA", "MX"]
+#     }
+
+#     return jsonify(bookmark)
+
+@app.route('/resources', methods=['POST'])
+@login_required
+def add_resource():
+
+    user_resource = request.form.get('bookmark')
+
+    return "Your resource has been bookmarked!"
 
 if __name__ == '__main__':
     connect_to_db(app)

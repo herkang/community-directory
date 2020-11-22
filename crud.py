@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Category, Resource, Bookmark, connect_to_db 
+from model import db, User, Category, Resource, connect_to_db 
 
 def create_user(username, password):
     """Create and return a new user instance"""
@@ -57,7 +57,7 @@ def create_resource(resource, contact, location, category):
     db.session.add(new_resource)
     db.session.commit()  
 
-    return resource #will return 'Confederation of Somali'
+    return resource 
 
 def get_all_resources():
     """Returns all resources"""
@@ -73,19 +73,33 @@ def get_resources_by_category(category):
 
     return Resource.query.filter(Resource.category_id==category).all()
     
-def add_bookmark_by_id(user, resource, bookmark):
+def add_bookmark_by_resource(resource):
     """Create and return a bookmark resource instance"""
 
-    new_bookmarks = Bookmarks(user=user, resouce=resource, bookmark=bookmark)
-    db.session.add(new_bookmarks)
+    bookmark = User(resouce=resource)
+    db.session.add(bookmark)
     db.session.commit()
 
-    return new_bookmarks
+    return bookmark
 
-def get_bookmarks_by_user_id(user_id):
+def create_bookmark_list(id):
+
+    bookmark_list=[]
+
+    for bookmark in user_resource:
+        resource = User.query.filter(User.id==id).all()
+        bookmark_list.append(resource)
+    return bookmark_list
+
+def get_bookmarks_by_user_id(id):
     """Return user's favorite"""
 
-    return Bookmark.query.get(user_id)
+    return User.query.filter(User.id==id).all()
+
+def delete_bookmark_by_id(bookmark_id):
+    
+    return db.session.delete(bookmark_id)
+
 
 if __name__ == '__main__':
     from server import app
