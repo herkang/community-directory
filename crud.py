@@ -50,10 +50,10 @@ def get_category_by_name(category):
 
     return Category.query.get(Category.category==category).first()
 
-def create_resource(resource, contact, location, category):
+def create_resource(resource, contact, location, new_category):
     """Create and return a new resource instance"""
     
-    new_resource = Resource(resource=resource, contact=contact, location=location, category=category)
+    new_resource = Resource(resource=resource, contact=contact, location=location, category=new_category)
     db.session.add(new_resource)
     db.session.commit()  
 
