@@ -76,6 +76,7 @@ def login():
             login_user(user)
             
             flash('Welcome back!')
+            print('***********', user.id, 'in terminal***********')
             
             next_ = request.args.get('next')
           
@@ -105,6 +106,12 @@ def logout():
     logout_user()
     return redirect('/categories') 
 
+@app.route('/categories', methods=['POST'])
+def create_category(category):
+
+    return crud.create_category(category)
+
+
 @app.route('/categories') #already shown in hompage
 def categories():
     """View all categories"""
@@ -115,11 +122,22 @@ def categories():
 
 @app.route('/categories/<category_id>')
 def category(category_id):
-    """Show all resources for this category."""
 
     category = crud.get_category_by_id(category_id)
 
     return render_template('category.html', category=category)
+
+# @app.route('/categories', methods=['POST'])
+# def create_category(category):
+#return crud.create_category(category)
+#create something similiar for resource 
+
+@app.route('/resources/<category_id>')
+def create_resource(resource, contact, location, category_id):
+
+    resource = crud.create_resource(resource, contact, location, category_id)
+
+    return render_template('resource.html', resource=resource, contact=contact, location=location, category_id=category_id)
 
 @app.route('/resources')
 def all_resources():
@@ -147,19 +165,19 @@ def user_resource(user_id):
 
     return render_template('profile.html', bookmarks=bookmarks)
 
-# @app.route("/bookmark-info.json")
-# def melon_info():
-#     """Return info about a bookmark as JSON."""
+@app.route("/bookmark-info.json")
+def bookmark_info():
+    """Return info about a bookmark as JSON."""
 
-#     # In real life, we would probably get this info
-#     # from our database
-#     bookmark = {
-#         "id": "1",
-#         "username": "test1",
-#         "bookmark": ["US", "CA", "MX"]
-#     }
+    # In real life, we would probably get this info
+    # from our database
+    bookmark = {
+        "id": "1",
+        "username": "test1",
+        "bookmark": ["US", "CA", "MX"]
+    }
 
-#     return jsonify(bookmark)
+    return jsonify(bookmark)
 
 @app.route('/resources', methods=['POST'])
 @login_required
@@ -167,7 +185,11 @@ def add_resource():
 
     user_resource = request.form.get('bookmark')
 
-    return "Your resource has been bookmarked!"
+    flash('Your resource has been bookmarked!')
+
+    bookmark= crud.add_bookmark(user.id, resource)
+
+    return redirect('/resources') 
 
 if __name__ == '__main__':
     connect_to_db(app)
