@@ -141,6 +141,7 @@ def category_resource(category_id):
 
     category = crud.get_category_by_id(category_id)
     resources = crud.get_resources_by_category(category_id)
+    
     return render_template('category.html', category=category, resources=resources)
 
 #create on server side
