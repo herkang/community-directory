@@ -144,6 +144,14 @@ def category_resource(category_id):
     
     return render_template('category.html', category=category, resources=resources)
 
+@app.route('/bookmark')
+@login_required
+def add_bookmark(user_id, resource_id):
+
+    bookmark = crud.create_bookmark(user_id, resource_id)
+
+    return render_template('category.html', bookmark=bookmark)
+
 #create on server side
 # @app.route('/resources', methods=['POST'])
 # def create_resource(resource, contact, location, category):
