@@ -14,20 +14,17 @@
   
 <h1>Category</h1>
 
-<li>Category:
-  <a href="/categories/{{ category.id }}">
-   {{ category.category }}
-</a>
+<li>
+  Category:{{ category.category }}
 </li>
-<p>
 
+<p>
  some fun facts about category
 </p>
 
 {% for resource in resources %}
 <section class="resource_list_item">
- <!-- <a href="/categories/{{ category.id }}"> --> 
-    {{ resource.resource }}
+    {{ resource.resource }}</a>
     <ul>
       <li>Location: {{ resource.location }}</li>
       <li>Contact: {{ resource.contact }}</li>
@@ -35,4 +32,22 @@
     </ul>
 
 {% endfor %}
+
+<form id="bookmark-form" method="post" action="/bookmark">
+
+  <div class="form-group">
+    <label for="resource-field">Resource</label>
+    <select name="resource" class="form-control" id="type-field">
+
+      {% for resource in resources %}
+      <option value="{{ resource }}">{{ resource }}</option>         
+      {% endfor %}
+
+    </select>
+  </div>
+ 
+  <input type="submit" class="btn btn-primary">
+
+</form>
+
 {% endblock %}
