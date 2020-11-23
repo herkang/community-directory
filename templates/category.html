@@ -8,7 +8,7 @@
     <li><a href="/categories">Categories</a></li>
     <li><a href="/resources">Resources</a></li>
     <li><a href="/profile">Profile</a></li>
-    <li><a href="/login">Login</a></li>
+    <li><a href="/">Login</a></li>
 
   </ul>
   
@@ -24,4 +24,15 @@
  some fun facts about category
 </p>
 
+{% for resource in resources %}
+<section class="resource_list_item">
+ <!-- <a href="/categories/{{ category.id }}"> --> 
+    {{ resource.resource }}
+    <ul>
+      <li>Location: {{ resource.location }}</li>
+      <li>Contact: {{ resource.contact }}</li>
+      <li>Category: {{ resource.category.category }}</li>
+    </ul>
+
+{% endfor %}
 {% endblock %}
