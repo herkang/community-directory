@@ -55,9 +55,9 @@ def register_user():
     else:
         crud.create_user(username, password)
         flash('Account created! Please log in.')    
-        return redirect('/login')
+        return redirect('/')
 
-@app.route('/login', methods=['POST'])
+@app.route('/', methods=['POST'])
 def login():
 
     username = request.form.get('username')
@@ -92,23 +92,30 @@ def logout():
 def profile():
     """Return user profile and saved resources"""
 
-    return render_template('profile.html')
+    return render_template('profile.html', bookmarks=[]) #setting it to empty to work
 
-@app.route('/profile', methods=['POST'])
-@login_required
-def add_bookmark(resource):
-    """Return user profile and saved resources"""
+# @app.route('/profile', methods=['POST'])
+# @login_required
+# def add_bookmark(user_id):
+#     """Return create resource by user_id"""
 
-    return crud.add_to_bookmark_list(resource)
+#     return crud.add_to_bookmark_list(user_id)
 
-@app.route('/profile/<user_id>')
-@login_required
-def user_resource(user_id):
-    """Return user profile and saved resources"""
+# @app.route('/profile/<user_id>')
+# @login_required
+# def get_user_resource(user_id):
+#     """Returning bookmarks by id to profile template"""
 
-    bookmarks = crud.get_bookmarks_by_user_id(user_id)
+#     bookmarks = crud.get_bookmarks_by_user_id(user_id)
 
-    return render_template('profile.html', bookmarks=bookmarks)
+#     return render_template('profile.html', bookmarks=bookmarks)
+
+# @app.route('/profile/<user_id>')
+# @login_required
+# def delete_user_resource(user_id):
+#     """Delecting bookmarks by user id"""
+
+#     return crud.delete_bookmark_by_user_id(user_id)
 
 @app.route('/categories', methods=['POST'])
 def create_category(category):
@@ -122,12 +129,19 @@ def categories():
     # return render_template('all_categories.html', categories=categories)
     return redirect('/') #redirect to homepage
 
+# @app.route('/categories/<category_id>')
+# def category(category_id):
+
+#     category = crud.get_category_by_id(category_id)
+
+#     return render_template('category.html', category=category)
+
 @app.route('/categories/<category_id>')
-def category(category_id):
+def category_resource(category_id):
 
     category = crud.get_category_by_id(category_id)
-
-    return render_template('category.html', category=category)
+    resources = crud.get_resources_by_category(category_id)
+    return render_template('category.html', category=category, resources=resources)
 
 #create on server side
 # @app.route('/resources', methods=['POST'])
@@ -135,32 +149,35 @@ def category(category_id):
 
 #     return crud.create_resource(resource, contact, location, category)
 
-@app.route('/resources')
-def all_resources():
-    """View all resources in category"""
+# @app.route('/resources')
+# def all_resources():
+#     """View all resources in category"""
 
-    resources = crud.get_all_resources()
+#     resources = crud.get_all_resources()
 
-    return render_template('all_resources.html', resources=resources)
+#     return render_template('all_resources.html', resources=resources)
 
-@app.route('/resources', methods=['POST']) #Method Not Allowed
-@login_required
-def add_resource():
+# @app.route('/resources', methods=['POST']) #Method Not Allowed
+# @login_required
+# def add_resource():
 
-    bookmarks = request.form.get('bookmark')
+#     bookmarks = request.form.get('bookmark')
 
-    flash('Your resource has been bookmarked!')
+#     flash('Your resource has been bookmarked!')
 
-    # return redirect('/resources')
-    return render_template('/profile.html', bookmarks=bookmarks)
+#     # return redirect('/resources')
+#     #or add eventlister or ajax drop down?
+#     #or call crud.add_to_bookmark_list
+    
+#     return render_template('/profile.html', bookmarks=bookmarks)
 
-@app.route('/resources/<category_id>')
-def resource(category_id):
-    """View selected category resource"""
+# @app.route('/resources/<category_id>')
+# def resource(category_id):
+#     """View selected category resource"""
 
-    resource = crud.get_resource_by_id(category_id)
+#     resource = crud.get_resource_by_id(category_id)
 
-    return render_template('resources.html', resource=resource)
+#     return render_template('resources.html', resource=resource)
 
 if __name__ == '__main__':
     connect_to_db(app)
