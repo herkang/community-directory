@@ -9,14 +9,16 @@
   <ul>
     <li><a href="/categories">Categories</a></li>
     <li><a href="/resources">Resources</a></li>
+    <li><a href="/profile">Profile</a></li>
     <li><a href="/logout">Logout</a></li>
+
   </ul>
 
 {% for bookmark in bookmarks %}
   <section class="bookmark_list_item">
     
     <li>Bookmarks:
-      <a href="/profile/ {{ bookmark.user_id }}">
+
        {{ bookmark.resource }}
     </a>
     </li>
