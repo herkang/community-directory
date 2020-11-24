@@ -117,9 +117,19 @@ def get_user_bookmark(user_id):
 @login_required
 def delete_user_bookmark(user_id):
     """Delecting bookmarks by user id"""
-    user_id = request.form.get('user')
 
     return crud.delete_bookmark_by_user_id(user_id)
+
+
+# other function with form 
+# @app.route('/profile/<user_id>', methods=['POST'])
+# @login_required
+# def delete_user_bookmark(user_id):
+#     """Delecting bookmarks by user id"""
+
+#     resource_id = request.form.get('resource')
+
+#     return crud.delete_bookmark_by_user_id(user_id, resource_id)
 
 # @app.route('/categories', methods=['POST'])
 # def create_category(category):
@@ -129,6 +139,7 @@ def delete_user_bookmark(user_id):
 @app.route('/categories') 
 def categories():
     """View all categories"""
+
     # categories = crud.get_category()
     # return render_template('all_categories.html', categories=categories)
     return redirect('/') #redirect to homepage

@@ -6,7 +6,6 @@
 <h1>Navigation</h1>
   <ul>
     <li><a href="/categories">Categories</a></li>
-    <li><a href="/resources">Resources</a></li>
     <li><a href="/profile">Profile</a></li>
     <li><a href="/">Login</a></li>
 
@@ -30,8 +29,7 @@
       <li>Contact: {{ resource.contact }}</li>
       <li>Category: {{ resource.category.category }}</li>
       <li>resource id {{resource.id}} </li>
-      <li>{{current_user.username}}</li>
-      <li>{{current_user.id}}</li>
+
     </ul>
 
 {% endfor %}

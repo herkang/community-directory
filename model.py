@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
                         unique= True)
     password = db.Column(db.String)
 
-    # # bookmarks: List[Resource]
+    # bookmarks: List[Resource]
     # bookmarks = db.relationship(
     #     "Resource",
     #     secondary="user_resources",
@@ -96,7 +96,7 @@ class Bookmark(db.Model):
     def __repr__(self):
         """Show user resource information"""
 
-        return f'<User Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
+        return f'<User_Resource ID={self.id} User ID={self.user_id}, Resource ID={self.resource_id}>'
 
 
 def connect_to_db(flask_app, db_uri='postgresql:///directory', echo=True):

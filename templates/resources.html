@@ -8,16 +8,15 @@
     <li><a href="/categories">Categories</a></li>
     <li><a href="/resources">Resources</a></li>
     <li><a href="/profile">Profile</a></li>
-    <li><a href="/login">Login</a></li>
+    <li><a href="/">Login</a></li>
 
   </ul>
-
 
   <form id="bookmark-form" method="post" action="/resources">
 
     <div class="form-group">
       <label for="resource-field">Resource</label>
-      <select name="reource" class="form-control" id="type-field">
+      <select name="resource" class="form-control" id="type-field">
 
         {% for item in resource %}
           <section class="resource_list_item">
