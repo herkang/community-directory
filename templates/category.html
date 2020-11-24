@@ -29,6 +29,9 @@
       <li>Location: {{ resource.location }}</li>
       <li>Contact: {{ resource.contact }}</li>
       <li>Category: {{ resource.category.category }}</li>
+      <li>resource id {{resource.id}} </li>
+      <li>{{current_user.username}}</li>
+      <li>{{current_user.id}}</li>
     </ul>
 
 {% endfor %}
@@ -40,7 +43,7 @@
     <select name="resource" class="form-control" id="type-field">
 
       {% for resource in resources %}
-      <option value="{{ resource }}">{{ resource }}</option>         
+      <option name= "resource_id" value="{{ resource.id }}">{{ resource }}</option>         
       {% endfor %}
 
     </select>
