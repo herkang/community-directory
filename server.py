@@ -117,8 +117,9 @@ def get_user_bookmark(user_id):
 @login_required
 def delete_user_bookmark(user_id):
     """Delecting bookmarks by user id"""
-
-    return crud.delete_bookmark_by_user_id(user_id)
+    bookmark = crud.get_bookmarks_by_user_id
+    if user_id == bookmark.user_id:
+        return crud.delete_bookmark_by_user_id(user_id)
 
 
 # other function with form 
@@ -140,9 +141,9 @@ def delete_user_bookmark(user_id):
 def categories():
     """View all categories"""
 
-    # categories = crud.get_category()
-    # return render_template('all_categories.html', categories=categories)
-    return redirect('/') #redirect to homepage
+    categories = crud.get_categories()
+    return render_template('all_categories.html', categories=categories)
+    # return redirect('/') #redirect to homepage
 
 @app.route('/categories/<category_id>')
 def category_resource(category_id):
