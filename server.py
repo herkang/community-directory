@@ -95,7 +95,10 @@ def logout():
 def profile():
     """Return user profile and saved resources"""
 
-    return render_template('profile.html', bookmarks=[]) #setting it to empty to work
+    user_id = current_user.get_id()
+    bookmarks = crud.get_bookmarks_by_user_id(user_id)
+
+    return render_template('profile.html', bookmarks=bookmarks) #setting it to empty to work
 
 # @app.route('/profile', methods=['POST'])
 # @login_required
@@ -104,23 +107,22 @@ def profile():
 
 #     return crud.add_to_bookmark_list(user_id)
 
-@app.route('/profile/<user_id>')
-@login_required
-def get_user_bookmark(user_id):
-    """Returning bookmarks by id to profile template"""
+# @app.route('/profile/<user_id>')
+# @login_required
+# def get_user_bookmark(user_id):
+#     """Returning bookmarks by id to profile template"""
 
-    bookmarks = crud.get_bookmarks_by_user_id(user_id)
+#     bookmarks = crud.get_bookmarks_by_user_id(user_id)
 
-    return render_template('profile.html', bookmarks=bookmarks)
+#     return render_template('profile.html', bookmarks=bookmarks)
 
-@app.route('/profile/<user_id>', methods=['POST'])
-@login_required
-def delete_user_bookmark(user_id):
-    """Delecting bookmarks by user id"""
-    bookmark = crud.get_bookmarks_by_user_id
-    if user_id == bookmark.user_id:
-        return crud.delete_bookmark_by_user_id(user_id)
-
+# @app.route('/profile/<user_id>', methods=['POST'])
+# @login_required
+# def delete_user_bookmark(user_id):
+#     """Delecting bookmarks by user id"""
+#     bookmark = crud.get_bookmarks_by_user_id(user_id)
+#     if user_id == bookmark.user_id:
+#         return crud.delete_bookmark_by_user_id(user_id)
 
 # other function with form 
 # @app.route('/profile/<user_id>', methods=['POST'])
@@ -164,20 +166,17 @@ def create_bookmark():
     print( '*************', resource_id, '*************')
 
     bookmark = crud.get_bookmark_by_id(user_id, resource_id)
-    print( '*************', bookmark.resource_id, '*************')
-
-    # create crud to query bookmark by user_id and resource_id (in crud.py_)
-    # call here 
-    # if not already in bookmark data then 
-    # none then create bookmark (below)
-        
-    if resource_id != bookmark.resource_id: #if not in database already, it breaks
-        #AttributeError: 'NoneType' object has no attribute 'resource_id'
+    print( '*************', bookmark, '*************')
+   
+    if not bookmark:
         new_bookmark = crud.create_bookmark(user_id, resource_id)
+        flash('Bookmark created!')
+        print('********',new_bookmark,'*******')
     else:
+        print('!!!!!!!!!',bookmark,'!!!!!!!!!')
         flash('Already bookmarked resource')
-    return redirect('/')
-            
+    return redirect('/categories')
+
 #create on server side
 # @app.route('/resources', methods=['POST'])
 # def create_resource(resource, contact, location, category):
