@@ -2,8 +2,8 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, abort, jsonify)
-from flask_login import LoginManager, login_user, login_required, logout_user
-from model import connect_to_db
+from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from model import connect_to_db, User, Bookmark, Resource, Category
 import crud
 
 from jinja2 import StrictUndefined
@@ -117,10 +117,10 @@ def profile():
 
 #     return crud.delete_bookmark_by_user_id(user_id)
 
-@app.route('/categories', methods=['POST'])
-def create_category(category):
+# @app.route('/categories', methods=['POST'])
+# def create_category(category):
 
-    return crud.create_category(category) #create data in server terminal
+#     return crud.create_category(category) #create data in server terminal
 
 @app.route('/categories') 
 def categories():
@@ -128,13 +128,6 @@ def categories():
     # categories = crud.get_category()
     # return render_template('all_categories.html', categories=categories)
     return redirect('/') #redirect to homepage
-
-# @app.route('/categories/<category_id>')
-# def category(category_id):
-
-#     category = crud.get_category_by_id(category_id)
-
-#     return render_template('category.html', category=category)
 
 @app.route('/categories/<category_id>')
 def category_resource(category_id):
@@ -144,13 +137,38 @@ def category_resource(category_id):
     
     return render_template('category.html', category=category, resources=resources)
 
-@app.route('/bookmark')
+@app.route('/bookmark', methods=['POST'])
 @login_required
-def add_bookmark(user_id, resource_id):
+def create_bookmark():
+   
+    resource_id = request.form.get('resource_id')
+    user_id = current_user.get_id()
+    print( '*************', resource_id, '*************')
+
+    # create crud to query bookmark by user_id and resource_id (in crud.py_)
+    # call here 
+    # if not already in bookmark data then 
+    # none then create bookmark (below)
 
     bookmark = crud.create_bookmark(user_id, resource_id)
 
-    return render_template('category.html', bookmark=bookmark)
+    print("****", bookmark, "***")
+
+    return redirect('/')
+            
+# @app.route('/bookmark', methods=['POST'])
+# @login_required
+# def add_bookmark():
+
+#     bookmark = request.form.get('bookmark')
+
+#     flash('Your resource has been bookmarked!')
+
+#     # return redirect('/resources')
+#     #or add eventlister or ajax drop down?
+#     #or call crud.add_to_bookmark_list
+    
+#     return render_template('category.html', bookmark=bookmark)
 
 #create on server side
 # @app.route('/resources', methods=['POST'])
