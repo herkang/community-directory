@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(80),
                         nullable=False, 
                         unique= True)
-    password = db.Column(db.String)
+    password = db.Column(db.String, nullable=False)
 
     # bookmarks: List[Resource]
     # bookmarks = db.relationship(
@@ -46,15 +46,15 @@ class Category(db.Model):
 
     __tablename__ = 'categories'
 
-    id = db.Column(db.Integer,
+    id = db.Column(db.String,
                         primary_key=True,
-                        autoincrement=True)
+                        unique=True)
     category = db.Column(db.String)
 
     def __repr__(self):
         """Show category information"""
 
-        return f'<Category={self.id}>'
+        return f'<Category id={self.id} Category={self.category}>'
 
 class Resource(db.Model):
     """Create a resources table"""
@@ -64,18 +64,19 @@ class Resource(db.Model):
     id = db.Column(db.Integer,
                         primary_key=True,
                         autoincrement=True)
-    category_id = db.Column(db.Integer,
+    category_id = db.Column(db.String,
                             db.ForeignKey('categories.id'))
-    resource = db.Column(db.String)
+    org_name = db.Column(db.String)
     contact = db.Column(db.String)
+    address = db.Column(db.String)
     location = db.Column(db.String)
-
+    
     category = db.relationship('Category', backref='resources')
 
     def __repr__(self):
         """Show resource information"""
 
-        return f'<ID={self.id} Category ID={self.category_id} Resource={self.resource}>'
+        return f'<ID={self.id} Category ID={self.category_id} org_name={self.org_name}>'
 
 class Bookmark(db.Model):
     """Create a user resources table"""
