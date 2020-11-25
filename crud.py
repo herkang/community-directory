@@ -30,7 +30,7 @@ def get_user_by_username(username):
 def create_category(category):
     """Create and return a new category instance"""
 
-    new_category = Category(category=category)
+    new_category = Category(id=category)
 
     db.session.add(new_category)
     db.session.commit()
@@ -42,18 +42,17 @@ def get_categories():
         
     return Category.query.all()
 
-# def get_category_id_by_name(category):
+def get_category_id_by_name(category):
 
-    # return Category.query(Category).get(category)
-    # return Category.query(Category.id).filter_by(category=category).first()
+    return Category.query(Category.id).filter_by(category=category).first()
 
 def get_category_by_id(category_id):
 
-    return Category.query.get(category_id)
+    return Category.query.filter_by(id=category_id).all()
 
 def get_category_by_name(category):
 
-    return Category.query.filter(category==category).all()
+    return Category.query.filter_by(category=category).all()
 
 def create_resource(org_name, contact, address, location, category_id):
     """Create and return a new resource instance"""
