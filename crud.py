@@ -42,18 +42,23 @@ def get_categories():
         
     return Category.query.all()
 
-def get_category_by_id(id):
+# def get_category_id_by_name(category):
 
-    return Category.query.get(id)
+    # return Category.query(Category).get(category)
+    # return Category.query(Category.id).filter_by(category=category).first()
 
-# def get_category_by_name(category):
+def get_category_by_id(category_id):
 
-#     return Category.query.get(Category.category==category).first()
+    return Category.query.get(category_id)
 
-def create_resource(resource, contact, location, new_category):
+def get_category_by_name(category):
+
+    return Category.query.filter(category==category).all()
+
+def create_resource(org_name, contact, address, location, category_id):
     """Create and return a new resource instance"""
     
-    new_resource = Resource(resource=resource, contact=contact, location=location, category=new_category)
+    new_resource = Resource(org_name=org_name, contact=contact, address=address, location=location, category_id=category_id)
     db.session.add(new_resource)
     db.session.commit()  
 
@@ -69,9 +74,13 @@ def get_resource_by_id(id):
 
     return Resource.query.filter(Resource.id==id).first()
 
+def get_resource_by_name(org_name):
+
+    return Resource.query.filter_by(org_name=org_name).all()
+
 def get_resources_by_category(category_id):
 
-    return Resource.query.filter(Resource.category_id==category_id).all()
+    return Resource.query.filter_by(category_id=category_id).all()
     
 def create_bookmark(user_id, resource_id):
     """Create and commit it"""
@@ -85,31 +94,19 @@ def create_bookmark(user_id, resource_id):
 def get_bookmark_by_id(user_id, resource_id):
     """Return user's bookmark"""
 
-    #return Bookmark.query.filter(Bookmark.id==id).one()
-
-    #return with bookmark class
-    return Bookmark.query.filter(Bookmark.user_id==user_id, Bookmark.resource_id==resource_id).first()
+    return Bookmark.query.filter_by(user_id=user_id, resource_id=resource_id).all()
 
 def get_bookmarks_by_user_id(user_id):
     """Return user's bookmarks"""
 
-    return Bookmark.query.filter(Bookmark.user_id==user_id).all()
+    return Bookmark.query.filter_by(user_id=user_id).all()
 
-def add_to_bookmark_list(user_id):
-    """ Bookmark resource associated with user_id to list"""
-    bookmark_list=[]
+def delete_bookmark_by_user_id(user_id, resource_id):
 
-    user_bookmark = Bookmark.query.filter(user_id==user_id).all() #get all usrr bookmark by user_id
-
-    for bookmark in user_bookmark:
-        resource = Bookmark.query.filter(Bookmark.user_id==user.id).one() #get resource from Bookmark
-        bookmark_list.append(resource)
-    return bookmark_list
-
-def delete_bookmark_by_user_id(user_id):
+    bookmark = Bookmark.query.filter_by(user_id=user_id, resource_id=resource_id).first()
     
-    return db.session.delete(Bookmark.user_id)
-
+    db.session.delete(bookmark)
+    db.session.commit()
 
 if __name__ == '__main__':
     from server import app
