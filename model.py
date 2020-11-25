@@ -49,12 +49,11 @@ class Category(db.Model):
     id = db.Column(db.String,
                         primary_key=True,
                         unique=True)
-    category = db.Column(db.String)
 
     def __repr__(self):
         """Show category information"""
 
-        return f'<Category id={self.id} Category={self.category}>'
+        return f'<Category id={self.id}>'
 
 class Resource(db.Model):
     """Create a resources table"""
