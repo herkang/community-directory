@@ -1,22 +1,39 @@
 import os
-import json
+import csv
+import pandas as pd 
 
 import crud
 import model
 import server
 
-os.system('dropdb directs')
-os.system('createdb directs')
+os.system('dropdb directory')
+os.system('createdb directory')
 
 model.connect_to_db(server.app)
 model.db.create_all()
 
-#load data from data/movies.json and save it to a variable:
-with open('__location_at_destintion (ex: data/movies.json)') as f:
-    resource_data = json.loads(f.read())
+with open('db.csv', 'r') as data:
 
-resource_in_db = []
+    for line in csv.DictReader(data):
+        for k, v in line.items():
+            # print(line)
+            # print({k: v})
+            category = crud.get_category_by_name(line['Category'])
+            if not category:
+                item = crud.create_category(line['Category'])
+                # item = crud.get_category_by_id(line['Category'])
+                # print('!!!!!!!!', line['Category'],'!!!!!!!!')
+                # !!!!!!!! Latino/as !!!!!!!!             
+                # print('!!!!!!!!', item.id,'!!!!!!!!')
+                # 5 !!!!!!!!  
+            else:
+                category_id = crud.get_resources_by_category(item.id)
 
-for resource in resource_data:
-    #TODO: Add datas
-    #https://fellowship.hackbrightacademy.com/materials/t2/exercises/ratings-v2/index-2.html
+                # if not resource:
+                    # category = line['Category']
+                org_name = line['Org Name']
+                contact = line['Contact']
+                address = line['Address']
+                location = line['Location']
+                resource_item = crud.create_resource(org_name, contact, address, location, item.id)
+
