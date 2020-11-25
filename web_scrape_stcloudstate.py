@@ -1,35 +1,40 @@
 from bs4 import BeautifulSoup
 import requests
-from bs2json import bs2json
 
-source = requests.get('https://www.stcloudstate.edu/mrc/outreach/mn-orgs.aspx').text
+import pandas as pd
+import json
+import csv
+import crud
 
+url = 'https://www.stcloudstate.edu/mrc/outreach/mn-orgs.aspx'
+dfs = pd.read_html(url)
 
-soup = BeautifulSoup(source, 'lxml')
-#whole webpage
-#print(soup.prettify())
+df = dfs[0]
 
-# converter = bs2json()
+df2 = df[['Category', 'Org Name', 'Contact', 'Address', 'Location']]
 
-# tag = soup.find('td')
-# json = converter.convert(tag)
-# print(json)
+df2.to_csv('db.csv')
 
+with open('db.csv', 'r') as data:
 
+    for line in csv.DictReader(data):
+        for k, v in line.items():
+            # print({k: v})
+            # print(line['Address'])
 
-table = soup.find('tbody')
-#all table content in html pretiffy and links
-#print(table.prettify())
+            category = crud.get_category_by_name(line['Category'])
+            print(category)
+            # if not category:
+            #     crud.create_category(line['Category'])
 
-summary = table.find_all('tr')
-#similiar to table above, but can't prettify
-#print(summary)
+            #     to store resourec, get category id and store it based on it
+            #     resouce takes in 
+            
+        #     category = line['Category']
+        #     org_name = line['Org Name']
+        #     contact = line['Contact']
+        #     address = line['Address']
+        #     location = line['Location']
 
-# def data(summary):
-
-#     item_in_list = []
-#     for row in summary:
-#         for td in row.find_all('td'):
-#             item_in_list.append(td.text)
-#     return item_in_list
-
+        # resource = category + org_name+contact+address+location
+        # print(resource)

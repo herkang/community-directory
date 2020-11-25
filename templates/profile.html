@@ -17,12 +17,26 @@
   <section class="bookmark_list_item">
     
     <li>Bookmarks:
-
-       {{ bookmark.resource }}
+       {{ bookmark.resource}}
     </a>
     </li>
   </section>
 {% endfor %}
 
+<form id="bookmark-form" method="post" action="/profile">
 
+  <div class="form-group">
+    <label for="resource-field">Resource</label>
+    <select name="bookmark" class="form-control" id="type-field">
+
+      {% for bookmark in bookmarks %}
+      <option name= "bookmark_resource_id" value="{{ bookmark.resource_id }}">{{ bookmark.resource_id }}</option>         
+      {% endfor %}
+
+    </select>
+  </div>
+ 
+  <input type="submit" class="btn btn-primary" value ="Delete">
+
+</form>
 {% endblock %}

@@ -40,7 +40,6 @@ class User(db.Model, UserMixin):
         
         return str(self.id)
 
-
 class Category(db.Model):
     """Create a resource categories table"""
 

@@ -14,7 +14,7 @@
 <h1>Category</h1>
 
 <li>
-  Category:{{ category.category }}
+  Category:{{ category }}
 </li>
 
 <p>
@@ -23,18 +23,18 @@
 
 {% for resource in resources %}
 <section class="resource_list_item">
-    {{ resource.resource }}</a>
+    {{ resource }}</a>
     <ul>
       <li>Location: {{ resource.location }}</li>
       <li>Contact: {{ resource.contact }}</li>
-      <li>Category: {{ resource.category.category }}</li>
+      <li>Category: {{ resource.category }}</li>
       <li>resource id {{resource.id}} </li>
 
     </ul>
 
 {% endfor %}
 
-<form id="bookmark-form" method="post" action="/bookmark">
+<form id="resources-form" method="post" action="/bookmark">
 
   <div class="form-group">
     <label for="resource-field">Resource</label>
