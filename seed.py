@@ -13,7 +13,7 @@ model.connect_to_db(server.app)
 model.db.drop_all()
 model.db.create_all()
 
-with open('db.csv', 'r') as data:
+with open('database.csv', 'r') as data:
 
     for line in csv.DictReader(data):
 
