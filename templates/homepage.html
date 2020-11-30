@@ -26,13 +26,13 @@
     </p>
   </form>
 
-  <h1>All Categories</h1>
+  <h1>Minority Communities</h1>
 
   {% for category in categories %}
     <section class="category_list_item">
-      <li>Category:
+      <li>
         <a href="/categories/{{ category.id }}">
-         {{ category }}
+         {{ category.id }}
       </a>
       </li>
     </section>

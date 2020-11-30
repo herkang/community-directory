@@ -11,24 +11,15 @@
 
   </ul>
   
-<h1>Category</h1>
-
-<li>
-  Category:{{ category }}
-</li>
-
-<p>
- some fun facts about category
-</p>
+<h1>Community</h1>
 
 {% for resource in resources %}
 <section class="resource_list_item">
-    {{ resource }}</a>
+    {{ resource.org_name }}</a>
     <ul>
-      <li>Location: {{ resource.location }}</li>
-      <li>Contact: {{ resource.contact }}</li>
-      <li>Category: {{ resource.category }}</li>
-      <li>resource id {{resource.id}} </li>
+
+      <li>Address: {{ resource.address }}, {{ resource.location}}</li>
+      <li>Phone Number: {{ resource.contact }}</li>
 
     </ul>
 
@@ -41,7 +32,7 @@
     <select name="resource" class="form-control" id="type-field">
 
       {% for resource in resources %}
-      <option name= "resource_id" value="{{ resource.id }}">{{ resource }}</option>         
+      <option name= "resource_id" value="{{ resource.id }}">{{ resource.org_name }}</option>         
       {% endfor %}
 
     </select>

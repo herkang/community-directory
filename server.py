@@ -137,7 +137,7 @@ def create_bookmark():
 
     else:
         flash('Already bookmarked resource')
-    return redirect('/categories')
+    return redirect('/categories') #TODO: redirect back to minority page
 
 if __name__ == '__main__':
     connect_to_db(app)

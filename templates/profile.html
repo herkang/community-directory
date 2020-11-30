@@ -8,16 +8,16 @@
 <h1>Navigation</h1>
   <ul>
     <li><a href="/categories">Categories</a></li>
-    <li><a href="/profile">Profile</a></li>
     <li><a href="/logout">Logout</a></li>
-
   </ul>
+
+<h1>Bookmarks</h1>
 
 {% for bookmark in bookmarks %}
   <section class="bookmark_list_item">
     
-    <li>Bookmarks:
-       {{ bookmark.resource}}
+    <li>
+       {{ bookmark.resource.org_name}}
     </a>
     </li>
   </section>
@@ -26,11 +26,11 @@
 <form id="bookmark-form" method="post" action="/profile">
 
   <div class="form-group">
-    <label for="resource-field">Resource</label>
+    <label for="resource-field">Bookmarked Resources</label>
     <select name="bookmark" class="form-control" id="type-field">
 
       {% for bookmark in bookmarks %}
-      <option name= "bookmark_resource_id" value="{{ bookmark.resource_id }}">{{ bookmark.resource_id }}</option>         
+      <option name= "bookmark_resource_id" value="{{ bookmark.resource_id }}">{{ bookmark.resource.org_name }}</option>         
       {% endfor %}
 
     </select>
