@@ -7,4 +7,4 @@ dataframe = pd.read_html(url)[0]
 
 dataframe_without_missing_columns = dataframe.dropna()
 
-dataframe_without_missing_columns.to_csv('database.cvs')
+dataframe_without_missing_columns.to_csv('static/database.cvs')
