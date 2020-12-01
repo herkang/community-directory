@@ -7,6 +7,7 @@ import csv
 import crud
 
 url = 'https://www.stcloudstate.edu/mrc/outreach/mn-orgs.aspx'
+
 dfs = pd.read_html(url)
 
 df = dfs[0]

@@ -28,15 +28,12 @@ def load_user(user_id):
 
 @app.route('/')
 def homepage():
-    """View homepage"""
 
     categories = crud.get_categories()
-
     return render_template('homepage.html', categories=categories)
 
 @app.route('/signup')
 def signup_form():
-    """View sign up form"""
 
     return render_template('signup.html')
 
@@ -102,14 +99,13 @@ def delete_bookmark_in_profile():
     resource_id = request.form.get('bookmark')
     user_id = current_user.get_id()
 
-    bookmarks = crud.get_bookmarks_by_user_id(user_id)
+    crud.get_bookmarks_by_user_id(user_id)
     crud.delete_bookmark_by_user_id(user_id, resource_id)
 
     return redirect('/profile')
 
 @app.route('/categories') 
 def categories():
-    """View all categories"""
 
     categories = crud.get_categories()
     return render_template('all_categories.html', categories=categories)
@@ -132,7 +128,7 @@ def create_bookmark():
     bookmark = crud.get_bookmark_by_id(user_id, resource_id)
 
     if not bookmark:
-        new_bookmark = crud.create_bookmark(user_id, resource_id)
+        crud.create_bookmark(user_id, resource_id)
         flash('Bookmark created!')
 
     else:

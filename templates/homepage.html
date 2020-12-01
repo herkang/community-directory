@@ -5,7 +5,6 @@
 
   <h1>Navigation</h1>
   <ul>
-    <li><a href="/categories">Categories</a></li>
     <li><a href="/signup">Sign Up</a></li>
   </ul>
 
@@ -23,17 +22,5 @@
       <input type="submit">
     </p>
   </form>
-
-  <h1>Minority Communities</h1>
-
-  {% for category in categories %}
-    <section class="category_list_item">
-      <li>
-        <a href="/categories/{{ category.id }}">
-         {{ category.id }}
-      </a>
-      </li>
-    </section>
-  {% endfor %}
   
 {% endblock %}
