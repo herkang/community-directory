@@ -1,6 +1,5 @@
 import os
 import csv
-import pandas as pd 
 
 import crud
 import model
@@ -13,7 +12,7 @@ model.connect_to_db(server.app)
 model.db.drop_all()
 model.db.create_all()
 
-with open('database.csv', 'r') as data:
+with open('static/database.cvs', 'r') as data:
 
     for line in csv.DictReader(data):
 
