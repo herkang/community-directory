@@ -104,11 +104,11 @@ def delete_bookmark_in_profile():
 
     return redirect('/profile')
 
-# @app.route('/categories') 
-# def categories():
+@app.route('/categories') 
+def categories():
 
-#     categories = crud.get_categories()
-#     return render_template('all_categories.html', categories=categories)
+    categories = crud.get_categories()
+    return render_template('all_categories.html', categories=categories)
 
 @app.route('/categories/<category_id>')
 def category_resource(category_id):
