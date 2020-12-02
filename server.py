@@ -101,6 +101,7 @@ def delete_bookmark_in_profile():
 
     crud.get_bookmarks_by_user_id(user_id)
     crud.delete_bookmark_by_user_id(user_id, resource_id)
+    flash('Successfully deleted resource!')
 
     return redirect('/profile')
 
@@ -115,25 +116,35 @@ def category_resource(category_id):
 
     category = crud.get_category_by_id(category_id)
     resources = crud.get_resources_by_category(category_id)
-    
+    category = category.__dict__
+
     return render_template('category.html', category=category, resources=resources)
 
 @app.route('/bookmark', methods=['POST'])
-@login_required
+# @login_required
 def create_bookmark():
    
     resource_id = request.form.get('resource')
     user_id = current_user.get_id()
 
-    bookmark = crud.get_bookmark_by_id(user_id, resource_id)
 
-    if not bookmark:
-        crud.create_bookmark(user_id, resource_id)
-        flash('Bookmark created!')
 
+    referrer = request.referrer
+
+    if not user_id:
+        flash('You must have an account')
     else:
-        flash('Already bookmarked resource')
-    return redirect('/categories') #TODO: redirect back to minority page
+
+        bookmark = crud.get_bookmark_by_id(user_id, resource_id)
+
+        if not bookmark:
+            crud.create_bookmark(user_id, resource_id)
+            flash('Bookmark created!')
+
+        else:
+            flash('Already bookmarked resource')
+            
+    return redirect(referrer) 
 
 if __name__ == '__main__':
     connect_to_db(app)

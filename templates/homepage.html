@@ -3,10 +3,7 @@
 
 {% block body %}
 
-  <h1>Navigation</h1>
-  <ul>
-    <li><a href="/signup">Sign Up</a></li>
-  </ul>
+{% if not current_user.is_authenticated %}
 
   <h2>Login</h2>
   <form action="/" method="POST">
@@ -22,5 +19,18 @@
       <input type="submit">
     </p>
   </form>
-  
+{% endif %}
+
+  <h1>Communities</h1>
+
+  {% for category in categories %}
+    <section class="category_list_item">
+      <li>
+        <a href="/categories/{{ category.id }}">
+         {{ category.id }}
+      </a>
+      </li>
+    </section>
+  {% endfor %}
+
 {% endblock %}

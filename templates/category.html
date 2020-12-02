@@ -3,13 +3,13 @@
 
 {% block body %}
 
-<h1>Navigation</h1>
-  <ul>
-    <li><a href="/categories">Categories</a></li>
-    <li><a href="/profile">Profile</a></li>
-  </ul>
-  
-<h1>Community</h1>
+
+
+
+<section class="category">
+  <h2> {{category.id}}</h2>
+
+</section>
 
 {% for resource in resources %}
 <section class="resource_list_item">

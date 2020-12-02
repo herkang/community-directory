@@ -48,7 +48,7 @@ def get_category_id_by_name(category):
 
 def get_category_by_id(category_id):
 
-    return Category.query.filter_by(id=category_id).all()
+    return Category.query.filter_by(id=category_id).first()
 
 def get_category_by_name(category):
 
