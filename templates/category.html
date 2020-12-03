@@ -1,35 +1,52 @@
 {% extends 'base.html' %}
 {% block title %}Category{% endblock %}
 
-{% block body %}
+{% block body %} 
+
+<div class="jumbotron">
+<div class="container">
 
 <section class="category">
   <h2> {{category.id}} </h2>
+  <p></p>
 </section>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-sm-8">
 
 {% for resource in resources %}
 <section class="resource_list_item">
-    {{ resource.org_name }}</a>
+    <h4>{{ resource.org_name }}</h4>
     <ul>
       <li>Phone Number: {{ resource.contact }}</li>
       <li>Address: {{ resource.address }}, {{ resource.location}}</li>
     </ul>
 {% endfor %}
+</div>
 
+<div class="col-sm-4">
 <form id="resources-form" method="post" action="/bookmark">
 
   <div class="form-group">
-    <label for="resource-field">Resource</label>
+    <label class="control-label col-sm-2" for="resource-field">Bookmark:</label>
+    
+    <div class="col-sm-10">
     <select name="resource" class="form-control" id="type-field">
-
       {% for resource in resources %}
       <option name= "resource_id" value="{{ resource.id }}">{{ resource.org_name }}</option>         
       {% endfor %}
-
     </select>
   </div>
- 
-  <input type="submit" class="btn btn-primary">
-</form>
+  </div>
 
+  <div class="col-sm-offset-2 col-sm-10">
+  <input type="submit" class="btn btn-primary">
+  </div>
+
+</form>
+</div>
+
+</div>
 {% endblock %}

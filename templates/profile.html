@@ -3,11 +3,24 @@
 {% block title %}{{ current_user.username }}'s Profile{% endblock %}
 
 {% block body %}
-
+<div class="jumbotron">
+  <div class="container">
+  
 <h2> Hi {{ current_user.username }} </h2>
 
-<h3> Bookmarks </h3>
+{% if bookmarks%}
+<p style="text-align: center;">Below are your saved resources</p>
 
+{%else%}
+
+ <p style="text-align: center;">You can save resources! It will be here.</p>
+{% endif %}
+
+</div>
+</div>
+
+<div class="container">
+{% if bookmarks %}
 {% for bookmark in bookmarks %}
   <section class="bookmark_list_item">
     <li>
@@ -17,20 +30,28 @@
   </section>
 {% endfor %}
 
+<div class="container">
 <form id="bookmark-form" method="post" action="/profile">
 
   <div class="form-group">
-    <label for="resource-field">Bookmarked Resources</label>
+    <label class="control-label col-sm-2" for="resource-field"></label>
+    
+    <div class="col-sm-10">
     <select name="bookmark" class="form-control" id="type-field">
-
       {% for bookmark in bookmarks %}
       <option name= "bookmark_resource_id" value="{{ bookmark.resource_id }}">{{ bookmark.resource.org_name }}</option>         
       {% endfor %}
-
     </select>
   </div>
- 
-  <input type="submit" class="btn btn-primary" value ="Delete">
+</div>
 
+  <div class="col-sm-offset-2 col-sm-10">
+  <input type="submit" class="btn btn-primary" value ="Delete">
+  </div>
+{% endif%}
 </form>
+</div>
+</div>
+
+</div>
 {% endblock %}

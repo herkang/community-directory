@@ -4,6 +4,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect, abort, jsonify)
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from model import connect_to_db, User, Bookmark, Resource, Category
+from urllib.parse import urlparse, urljoin
 import crud
 
 from jinja2 import StrictUndefined
@@ -17,9 +18,11 @@ app.jinja_env.undefined = StrictUndefined
 login_manager.init_app(app)
 
 def is_safe_url(url):
-    """TODO: implement later."""
-    
-    return True
+
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, url))
+    return test_url.scheme in ('http', 'https') and \
+           ref_url.netloc == test_url.netloc
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -105,12 +108,6 @@ def delete_bookmark_in_profile():
 
     return redirect('/profile')
 
-@app.route('/categories') 
-def categories():
-
-    categories = crud.get_categories()
-    return render_template('all_categories.html', categories=categories)
-
 @app.route('/categories/<category_id>')
 def category_resource(category_id):
 
@@ -126,8 +123,6 @@ def create_bookmark():
    
     resource_id = request.form.get('resource')
     user_id = current_user.get_id()
-
-
 
     referrer = request.referrer
 
