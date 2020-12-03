@@ -3,12 +3,8 @@
 
 {% block body %}
 
-
-
-
 <section class="category">
-  <h2> {{category.id}}</h2>
-
+  <h2> {{category.id}} </h2>
 </section>
 
 {% for resource in resources %}
@@ -18,7 +14,6 @@
       <li>Phone Number: {{ resource.contact }}</li>
       <li>Address: {{ resource.address }}, {{ resource.location}}</li>
     </ul>
-
 {% endfor %}
 
 <form id="resources-form" method="post" action="/bookmark">
@@ -35,7 +30,6 @@
   </div>
  
   <input type="submit" class="btn btn-primary">
-
 </form>
 
 {% endblock %}

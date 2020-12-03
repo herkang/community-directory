@@ -21,16 +21,20 @@
   </form>
 {% endif %}
 
-  <h1>Communities</h1>
+{% if current_user.is_authenticated %}
+  <h2>Communities</h2>
 
   {% for category in categories %}
     <section class="category_list_item">
+
       <li>
-        <a href="/categories/{{ category.id }}">
+      <a href="/categories/{{ category.id }}">
          {{ category.id }}
       </a>
       </li>
+
     </section>
   {% endfor %}
+{% endif %}
 
 {% endblock %}

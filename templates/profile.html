@@ -4,13 +4,12 @@
 
 {% block body %}
 
-<h1>Hi {{ current_user.username }}</h1>
+<h2> Hi {{ current_user.username }} </h2>
 
-<h1>Bookmarks</h1>
+<h3> Bookmarks </h3>
 
 {% for bookmark in bookmarks %}
   <section class="bookmark_list_item">
-    
     <li>
        {{ bookmark.resource.org_name}}
     </a>
