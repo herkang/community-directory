@@ -5,11 +5,6 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-# user_resources = db.Table('user_resources',
-#     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-#     db.Column('resource_id', db.Integer, db.ForeignKey('resources.id'), primary_key=True)
-# )
-
 class User(db.Model, UserMixin):
     """Create users table"""
 
@@ -22,13 +17,6 @@ class User(db.Model, UserMixin):
                         nullable=False, 
                         unique= True)
     password = db.Column(db.String, nullable=False)
-
-    # bookmarks: List[Resource]
-    # bookmarks = db.relationship(
-    #     "Resource",
-    #     secondary="user_resources",
-    #     backref="users",
-    # )
 
     def __repr__(self):
         """Show user information"""

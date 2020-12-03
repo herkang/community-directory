@@ -23,10 +23,14 @@
 {% if bookmarks %}
 {% for bookmark in bookmarks %}
   <section class="bookmark_list_item">
-    <li>
-       {{ bookmark.resource.org_name}}
-    </a>
-    </li>
+
+      <h4>{{ bookmark.resource.org_name}}</h4>
+      
+      <ul>
+       <li> {{ bookmark.resource.address}} </li>
+       <li> {{ bookmark.resource.contact}} </li>
+      </ul>
+
   </section>
 {% endfor %}
 
@@ -40,6 +44,7 @@
     <select name="bookmark" class="form-control" id="type-field">
       {% for bookmark in bookmarks %}
       <option name= "bookmark_resource_id" value="{{ bookmark.resource_id }}">{{ bookmark.resource.org_name }}</option>         
+      
       {% endfor %}
     </select>
   </div>
